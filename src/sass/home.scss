@@ -1,0 +1,36 @@
+@import './package/variables.scss';
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: $font;
+}
+
+body {
+    background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
+}
+
+/* Header navingtion styling and responsiveness start */
+@import './package/design/header.scss';
+/* Header styling ends here */
+
+/* main section desing */
+@import './package/design/banner.scss';
+/* end of main section desing */
+
+/* department section desing */
+@import './package/design/department.scss';
+/* end of department section desing */
+
+/* Teacher  section desing */
+@import './package/design/teacher.scss';
+/* end of Teacher  section desing */
+
+/* Notice  section desing */
+@import './package/design/notice.scss';
+/* end of Notice  section desing */
+
+/* Footer  section desing */
+@import './package/design/footer.scss';
+/* end of Footer  section desing */

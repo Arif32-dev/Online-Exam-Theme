@@ -1,0 +1,160 @@
+@import './../variables.scss';
+
+header {
+    width: 90%;
+    margin: 10px auto;
+
+    .container {
+        position: relative;
+        background-color: $primary_color;
+        width: 100%;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        z-index: 3;
+
+        .mobile_link,
+        .hamburger {
+            display: none;
+        }
+
+        .logo {
+            width: 20%;
+            cursor: pointer;
+        }
+
+        .link {
+            display: flex;
+            justify-content: space-around;
+            width: 70%;
+            font-weight: bolder;
+
+            nav,
+            .user-cred {
+                a {
+                    transition: all 0.5s ease-in-out;
+                    -webkit-transition: all 0.5s ease-in-out;
+                    -moz-transition: all 0.5s ease-in-out;
+                    -ms-transition: all 0.5s ease-in-out;
+                    -o-transition: all 0.5s ease-in-out;
+                }
+
+                a:hover {
+                    color: black;
+                }
+
+            }
+
+            nav {
+                width: 80%;
+
+                a {
+                    margin: 0 20px;
+                    text-decoration: none;
+                    color: white;
+                }
+            }
+
+            .user-cred {
+                width: 30%;
+                display: flex;
+                justify-content: space-around;
+                align-items: center;
+
+                a {
+                    text-decoration: none;
+                    color: white
+                }
+            }
+        }
+
+        border-radius: 15px;
+        -webkit-border-radius: 15px;
+        -moz-border-radius: 15px;
+        -ms-border-radius: 15px;
+        -o-border-radius: 15px;
+
+        @media screen and (max-width: 850px) {
+            .link {
+                display: none;
+            }
+
+            .logo {
+                img {
+                    transform: scale(0.8);
+                    -webkit-transform: scale(0.8);
+                    -moz-transform: scale(0.8);
+                    -ms-transform: scale(0.8);
+                    -o-transform: scale(0.8);
+                }
+            }
+
+            .hamburger {
+                display: block;
+                width: 70%;
+                font-weight: bolder;
+                font-size: 35px;
+                display: flex;
+                justify-content: flex-end;
+                align-items: center;
+                cursor: pointer;
+                color: white;
+                padding-right: 10px;
+
+                i {
+                    z-index: 5;
+                }
+
+                span {
+                    transition: all 0.5s ease-in-out;
+                    -webkit-transition: all 0.5s ease-in-out;
+                    -moz-transition: all 0.5s ease-in-out;
+                    -ms-transition: all 0.5s ease-in-out;
+                    -o-transition: all 0.5s ease-in-out;
+
+                    &:hover {
+                        color: black;
+                    }
+                }
+            }
+
+            .mobile_link {
+                display: none;
+                position: absolute;
+                right: 0;
+                top: 80%;
+                flex-direction: column;
+                width: 100%;
+                background-color: $primary_color;
+                align-items: center;
+                padding: 60px 0 40px 0;
+
+                a {
+                    transition: all 0.5s ease-in-out;
+                    -webkit-transition: all 0.5s ease-in-out;
+                    -moz-transition: all 0.5s ease-in-out;
+                    -ms-transition: all 0.5s ease-in-out;
+                    -o-transition: all 0.5s ease-in-out;
+                    text-decoration: none;
+                    color: white;
+                    font-weight: bolder;
+                    padding: 10px 0;
+
+                    &:hover {
+                        color: black
+                    }
+                }
+
+                border-radius: 0 0 15px 15px;
+                -webkit-border-radius: 0 0 15px 15px;
+                -moz-border-radius: 0 0 15px 15px;
+                -ms-border-radius: 0 0 15px 15px;
+                -o-border-radius: 0 0 15px 15px;
+            }
+
+            .link-active {
+                display: flex;
+            }
+        }
+    }
+}
