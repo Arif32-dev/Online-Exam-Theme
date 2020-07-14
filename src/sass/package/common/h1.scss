@@ -1,0 +1,25 @@
+@mixin h1_tag {
+
+    font-size: 40px;
+    letter-spacing: 1px;
+    width: 100%;
+    margin-bottom: 30px;
+    text-align: center;
+    position: relative;
+
+    &::after {
+        content: "";
+        position: absolute;
+        left: 50%;
+        width: 15%;
+        height: 5px;
+        display: block;
+        background-color: $primary_color;
+        transform: translateX(-50%);
+        -webkit-transform: translateX(-50%);
+        -moz-transform: translateX(-50%);
+        -ms-transform: translateX(-50%);
+        -o-transform: translateX(-50%);
+    }
+
+}
