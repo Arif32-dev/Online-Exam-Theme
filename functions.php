@@ -4,6 +4,7 @@ class OE_function
     public function __construct()
     {
         add_action("wp_enqueue_scripts", [$this, 'oe_files']);
+        $this->include_other_class();
     }
     public function oe_files()
     {
@@ -14,6 +15,10 @@ class OE_function
         wp_enqueue_script('jquery');
         wp_enqueue_script('online-exam_fontawesome', '//cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/js/all.min.js', '', '1.0.0', true);
         wp_enqueue_script('online-exam_main', get_template_directory_uri() . '/public/assets/scripts/online_exam.min.js', 'jquery', '1.0.0', true);
+    }
+    public function include_other_class()
+    {
+        require_once get_theme_file_path() . '/public/includes/class/add-page.php';
     }
 }
 new OE_function();

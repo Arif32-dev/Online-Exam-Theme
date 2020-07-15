@@ -7,7 +7,7 @@ jQuery(document).ready(function($) {
             this.events()
         }
         events() {
-            this.hamburger.on('click', this.toggle_link.bind(this))
+            this.hamburger.on('click', this.toggle_link.bind(this));
         }
         toggle_link(e) {
             this.mobile_link.toggleClass('link-active')

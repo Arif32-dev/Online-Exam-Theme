@@ -11,7 +11,11 @@
 
 </head>
 
-<body>
+<body <?php body_class()?>>
+<?php
+global $post;
+
+?>
     <!-- header-start -->
     <header>
             <div class="container">
@@ -20,13 +24,13 @@
                 </div>
                 <div class="link">
                     <nav>
-                        <a href="">Home</a>
-                        <a href="">Blog</a>
-                        <a href="">Department</a>
+                        <a class="oe-active" href="<?php echo site_url('/home') ?>">Home</a>
+                        <a href="<?php echo site_url('/blog') ?>">Blog</a>
+                        <a href="<?php echo site_url('/department') ?>">Department</a>
                     </nav>
                     <div class="user-cred">
-                        <a href="">Login</a>
-                        <a href="">Sign Up</a>
+                        <a href="<?php echo site_url('/login') ?>">Login</a>
+                        <a href="<?php echo site_url('/sign-up') ?>">Sign Up</a>
                     </div>
                 </div>
                 <div class="hamburger">
@@ -36,7 +40,7 @@
                 </div>
                 <div class="mobile_link">
 
-                        <a href="">Home</a>
+                        <a class="oe-active" href="">Home</a>
                         <a href="">Blog</a>
                         <a href="">Department</a>
                         <a href="">Login</a>
