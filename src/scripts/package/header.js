@@ -3,7 +3,6 @@ jQuery(document).ready(function($) {
         constructor() {
             this.hamburger = $('.hamburger > span');
             this.mobile_link = $('.mobile_link');
-            this.header = $('header');
             this.events()
         }
         events() {

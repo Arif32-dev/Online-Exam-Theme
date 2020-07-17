@@ -34,7 +34,7 @@
                     <span><strong>Department :</strong>Computer Science</span>
                     <span><strong>Phone :</strong>01874127669</span>
                 </div>
-                <button>View Teacher</button>
+                <a>View Teacher</a>
             </div>
         </div>
         <div class="teacher_info">
@@ -47,7 +47,7 @@
                     <span><strong>Department :</strong>Computer Science</span>
                     <span><strong>Phone :</strong>01874127669</span>
                 </div>
-                <button>View Teacher</button>
+                <a>View Teacher</a>
             </div>
         </div>
         <div class="teacher_info">
@@ -60,36 +60,9 @@
                     <span><strong>Department :</strong>Computer Science</span>
                     <span><strong>Phone :</strong>01874127669</span>
                 </div>
-                <button>View Teacher</button>
+                <a>View Teacher</a>
             </div>
         </div>
-        <div class="teacher_info">
-            <div class="side_logo">
-                <img src="<?php echo get_template_directory_uri() . '/public/assets/img/avatar.png' ?>" alt="">
-            </div>
-            <div class="teacher_details">
-                <div class="row">
-                    <span><strong>Name :</strong>Arifur Rahman Arif</span>
-                    <span><strong>Department :</strong>Computer Science</span>
-                    <span><strong>Phone :</strong>01874127669</span>
-                </div>
-                <button>View Teacher</button>
-            </div>
-        </div>
-        <div class="teacher_info">
-            <div class="side_logo">
-                <img src="<?php echo get_template_directory_uri() . '/public/assets/img/avatar.png' ?>" alt="">
-            </div>
-            <div class="teacher_details">
-                <div class="row">
-                    <span><strong>Name :</strong>Arifur Rahman Arif</span>
-                    <span><strong>Department :</strong>Computer Science</span>
-                    <span><strong>Phone :</strong>01874127669</span>
-                </div>
-                <button>View Teacher</button>
-            </div>
-        </div>
-
     </div>
 </section>
 <section class="notice">

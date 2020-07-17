@@ -1,6 +1,4 @@
-@import '../common/h1.scss';
-@import '../common/box_shadow.scss';
-@import '../variables.scss';
+@use '../common/module';
 
 .dept_wrap {
     width: 100%;
@@ -8,8 +6,9 @@
     margin-bottom: 30px;
 
     h1 {
-        @include h1_tag;
+        @include module.h1_tag($primary_color);
     }
+
 
     .department {
         padding: 20px 15px 20px 10px;
@@ -39,7 +38,7 @@
             -o-transition: all 0.5s ease-in-out;
 
             &:hover {
-                @include shadow;
+                @include module.shadow;
             }
         }
     }

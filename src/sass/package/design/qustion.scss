@@ -1,0 +1,169 @@
+@use '../common/module';
+
+.qus-container {
+    width: 95%;
+    margin: 20px auto;
+
+    .qus_wrap {
+        width: 100%;
+        display: grid;
+        grid-gap: 20px;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    }
+
+    .qus_card {
+        align-self: start;
+        justify-self: center;
+        background-color: white;
+        max-width: 500px;
+        padding: 20px 15px;
+        border-radius: 20px;
+        -webkit-border-radius: 20px;
+        -moz-border-radius: 20px;
+        -ms-border-radius: 20px;
+        -o-border-radius: 20px;
+        transition: all 0.5s ease-in-out;
+        -webkit-transition: all 0.5s ease-in-out;
+        -moz-transition: all 0.5s ease-in-out;
+        -ms-transition: all 0.5s ease-in-out;
+        -o-transition: all 0.5s ease-in-out;
+
+        &:hover {
+            @include module.shadow;
+        }
+
+    }
+
+    .qustion {
+        width: 100%;
+        padding: 20px 10px;
+
+        p {
+            text-align: center;
+            padding: 0 5px;
+        }
+
+        &:hover {
+            @include module.shadow;
+        }
+
+        transition: all 0.5s ease-in-out;
+        -webkit-transition: all 0.5s ease-in-out;
+        -moz-transition: all 0.5s ease-in-out;
+        -ms-transition: all 0.5s ease-in-out;
+        -o-transition: all 0.5s ease-in-out;
+
+    }
+
+    form {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        .ans {
+            width: 100%;
+        }
+
+        .ans_box {
+            padding: 10px;
+            margin: 10px 0;
+
+            &:hover {
+                @include module.shadow;
+            }
+
+            transition: all 0.5s ease-in-out;
+            -webkit-transition: all 0.5s ease-in-out;
+            -moz-transition: all 0.5s ease-in-out;
+            -ms-transition: all 0.5s ease-in-out;
+            -o-transition: all 0.5s ease-in-out;
+        }
+
+        input[type=radio] {
+            position: relative;
+            width: 25px;
+            height: 25px;
+            cursor: pointer;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            -ms-appearance: none;
+            -o-appearance: none;
+            border: 2px solid $primary_color;
+
+
+            &:checked::after {
+                width: 15px;
+                height: 15px;
+                border-radius: 50%;
+                top: 50%;
+                left: 50%;
+                position: absolute;
+                background-color: $primary_color;
+                content: '';
+                display: inline-block;
+                visibility: visible;
+                -webkit-border-radius: 50%;
+                -moz-border-radius: 50%;
+                -ms-border-radius: 50%;
+                -o-border-radius: 50%;
+                transform: translate(-50%, -50%);
+                -webkit-transform: translate(-50%, -50%);
+                -moz-transform: translate(-50%, -50%);
+                -ms-transform: translate(-50%, -50%);
+                -o-transform: translate(-50%, -50%);
+            }
+
+            outline: none;
+            border-radius: 50%;
+            -webkit-border-radius: 50%;
+            -moz-border-radius: 50%;
+            -ms-border-radius: 50%;
+            -o-border-radius: 50%;
+        }
+
+        input[type=submit] {
+            @include module.btn($primary_color);
+        }
+    }
+
+
+
+}
+
+.result-sec {
+    width: 98%;
+    margin: 40px auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    a {
+        text-decoration: none;
+        outline: none;
+        padding: 10px 30px;
+        font-size: 15px;
+        letter-spacing: 1px;
+        border: 1px solid $primary_color;
+        background-color: $primary_color;
+        color: white;
+        font-weight: bolder;
+        cursor: pointer;
+        transition: all 0.5s ease-in-out;
+        -webkit-transition: all 0.5s ease-in-out;
+        -moz-transition: all 0.5s ease-in-out;
+        -ms-transition: all 0.5s ease-in-out;
+        -o-transition: all 0.5s ease-in-out;
+
+        &:hover {
+            background: transparent;
+            color: $primary_color;
+        }
+
+        border-radius: 20px;
+        -webkit-border-radius: 20px;
+        -moz-border-radius: 20px;
+        -ms-border-radius: 20px;
+        -o-border-radius: 20px;
+    }
+}

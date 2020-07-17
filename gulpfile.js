@@ -3,8 +3,8 @@
  * @param importer for gulp file
  */
 var gulp = require('gulp');
+var sass = require('gulp-dart-sass');
 var cssnano = require('gulp-cssnano');
-var sass = require('gulp-sass');
 var sourcemaps = require('gulp-sourcemaps');
 var rename = require("gulp-rename");
 

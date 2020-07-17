@@ -40,11 +40,11 @@ global $post;
                 </div>
                 <div class="mobile_link">
 
-                        <a class="oe-active" href="">Home</a>
-                        <a href="">Blog</a>
-                        <a href="">Department</a>
-                        <a href="">Login</a>
-                        <a href="">Sign Up</a>
+                        <a class="oe-active" href="<?php echo site_url('/home') ?>">Home</a>
+                        <a href="<?php echo site_url('/blog') ?>">Blog</a>
+                        <a href="<?php echo site_url('/department') ?>">Department</a>
+                        <a href="<?php echo site_url('/login') ?>">Login</a>
+                        <a href="<?php echo site_url('/sign-up') ?>">Sign Up</a>
                 </div>
             </div>
     </header>

@@ -1,0 +1,78 @@
+@use '../common/module';
+
+.oe-post-sec {
+    width: 98%;
+    margin: 30px auto;
+
+    .post_container {
+        width: 98%;
+        margin: 0 auto;
+        display: grid;
+        grid-gap: 20px;
+        grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+    }
+
+    .post_wrap {
+        align-self: start;
+        justify-self: center;
+        max-width: 600px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 10px;
+
+        h1 {
+            align-self: flex-start;
+            white-space: normal;
+            margin-bottom: 15px;
+        }
+
+        .post_img {
+            border: 2px solid $primary_color;
+            display: block;
+            width: 100%;
+            height: 250px;
+            margin-bottom: 20px;
+
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                object-position: 50% 50%;
+            }
+        }
+
+        &:hover {
+            @include module.shadow;
+        }
+
+        background-color: white;
+        @include module.transition;
+        @include module.border-radious;
+    }
+
+    .post_content {
+        padding: 0 10px;
+        margin-bottom: 20px;
+
+        p {
+            white-space: normal;
+        }
+    }
+
+    .post_details {
+        align-self: flex-start;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .view_post {
+        @include module.btn($primary_color);
+    }
+
+    @media screen and (max-width: 560px) {
+        .post_container {
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        }
+    }
+}

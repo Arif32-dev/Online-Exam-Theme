@@ -1,11 +1,11 @@
-@import '../common/h1.scss';
+@use '../common/module';
 
 .oe_google_map {
     width: 98%;
     margin: 30px auto;
 
     h1 {
-        @include h1_tag;
+        @include module.h1_tag($primary_color);
     }
 
     .mapouter {

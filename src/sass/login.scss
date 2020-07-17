@@ -1,5 +1,6 @@
+@use './package/common/module';
+
 @import './package/variables.scss';
-@import './package/common/box_shadow.scss';
 
 .limiter {
 
@@ -161,7 +162,7 @@
         -o-transition: all 0.5s ease-in-out;
 
         &:hover {
-            @include shadow;
+            @include module.shadow;
         }
     }
 

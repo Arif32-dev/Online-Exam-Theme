@@ -48,6 +48,36 @@ class Add_page
         );
         wp_insert_post(
             [
+                'post_title' => 'Exam Result',
+                'post_status' => 'publish',
+                'post_type' => 'page',
+                'post_content' => "",
+
+            ],
+            true
+        );
+        wp_insert_post(
+            [
+                'post_title' => 'Previous Result',
+                'post_status' => 'publish',
+                'post_type' => 'page',
+                'post_content' => "",
+
+            ],
+            true
+        );
+        wp_insert_post(
+            [
+                'post_title' => 'Result Folder',
+                'post_status' => 'publish',
+                'post_type' => 'page',
+                'post_content' => "",
+
+            ],
+            true
+        );
+        wp_insert_post(
+            [
                 'post_title' => 'Login',
                 'post_status' => 'publish',
                 'post_type' => 'page',

@@ -1,13 +1,11 @@
-@import '../common/h1.scss';
-@import '../common/box_shadow.scss';
-@import '../variables.scss';
+@use '../common/module';
 
 .notice {
     width: 98%;
     margin: 20px auto;
 
     h1 {
-        @include h1_tag;
+        @include module.h1_tag($primary_color);
     }
 
     .notice_container {
@@ -16,6 +14,7 @@
         flex-wrap: wrap;
 
         div {
+            align-self: flex-start;
             width: 48%;
             min-width: 350px;
             margin: 0 auto;
@@ -58,7 +57,7 @@
                 }
 
                 &:hover {
-                    @include shadow;
+                    @include module.shadow;
                 }
 
                 transition: all 0.5s ease-in-out;
@@ -69,7 +68,7 @@
             }
 
             &:hover {
-                @include shadow;
+                @include module.shadow;
             }
 
             transition: all 0.5s ease-in-out;
@@ -82,10 +81,6 @@
             -moz-border-radius: 20px;
             -ms-border-radius: 20px;
             -o-border-radius: 20px;
-        }
-
-        .upcoming {
-            height: 50%;
         }
 
         @media screen and (max-width: 800px) {

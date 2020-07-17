@@ -1,0 +1,152 @@
+@use '../common/module';
+
+.exam_results {
+    width: 98%;
+    margin: 20px auto;
+
+    h1 {
+        @include module.h1_tag($primary_color)
+    }
+
+    table {
+        width: 100%;
+    }
+
+    thead {
+        background-color: $primary_color;
+        color: white;
+
+        tr {
+            th {
+                width: 20%;
+                font-weight: bolder;
+                font-size: 17px;
+                padding: 10px 0;
+            }
+        }
+    }
+
+    tbody {
+        tr {
+            height: 60px;
+        }
+
+        tr:nth-of-type(odd) {
+            background-color: white;
+        }
+
+        td {
+            padding-left: 10px;
+        }
+
+        .folder_icon {
+            a {
+                margin: 0 10px 0 0;
+                font-size: 25px;
+                cursor: pointer;
+                @include module.transition;
+                text-decoration: none;
+                color: black;
+
+                &:hover {
+                    color: $primary_color;
+                }
+            }
+        }
+
+        .pass_txt {
+            text-align: center;
+
+            span {
+                background-color: rgb(44, 224, 44);
+                padding: 5px 10px;
+                font-weight: bold;
+                border-radius: 5px;
+                -webkit-border-radius: 5px;
+                -moz-border-radius: 5px;
+                -ms-border-radius: 5px;
+                -o-border-radius: 5px;
+            }
+        }
+    }
+
+    @media screen and (max-width: 768px) {
+
+        table,
+        thead,
+        tbody,
+        th,
+        td,
+        tr {
+            display: block;
+        }
+
+        thead {
+            display: none;
+        }
+
+        tbody {
+
+            display: flex;
+            flex-direction: column;
+
+            tr {
+                margin: 0 0 10rem 0;
+                height: 0;
+
+                .pass_txt {
+                    text-align: left;
+
+                    span {
+                        padding: 3px 8px;
+                    }
+                }
+            }
+
+            td {
+
+                border-bottom: 1px solid $primary_color;
+                position: relative;
+                padding-left: 50%;
+            }
+
+            .pass_txt {
+                padding-top: 5px;
+                padding-bottom: 5px;
+            }
+
+            td:nth-of-type(odd) {
+                background-color: white;
+            }
+
+            td:before {
+                position: absolute;
+                top: 0;
+                left: 6px;
+                font-weight: bolder;
+                white-space: nowrap;
+            }
+
+            td:nth-of-type(1):before {
+                content: "Exam Name";
+            }
+
+            td:nth-of-type(2):before {
+                content: "Student Name";
+            }
+
+            td:nth-of-type(3):before {
+                content: "Full Mark";
+            }
+
+            td:nth-of-type(4):before {
+                content: "Student Mark";
+            }
+
+            td:nth-of-type(5):before {
+                content: "Status";
+            }
+        }
+    }
+
+}
