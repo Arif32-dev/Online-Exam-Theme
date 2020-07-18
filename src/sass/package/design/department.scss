@@ -1,9 +1,8 @@
 @use '../common/module';
 
 .dept_wrap {
-    width: 100%;
-    margin-top: 30px;
-    margin-bottom: 30px;
+    width: 98%;
+    margin: 20px auto;
 
     h1 {
         @include module.h1_tag($primary_color);
@@ -12,12 +11,24 @@
 
     .department {
         padding: 20px 15px 20px 10px;
-        width: 100%;
+        width: 98%;
+        margin: 0 auto;
         display: grid;
         grid-gap: 20px;
         grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 
         a {
+            margin: 10px 0;
+            position: relative;
+            left: 50%;
+            transform: translateX(-50%);
+            -webkit-transform: translateX(-50%);
+            -moz-transform: translateX(-50%);
+            -ms-transform: translateX(-50%);
+            -o-transform: translateX(-50%);
+
+            max-width: 600px;
+            align-self: start;
             background-color: white;
             height: 70px;
             font-size: 20px;

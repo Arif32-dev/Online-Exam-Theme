@@ -13,20 +13,19 @@
 
     .qus_card {
         align-self: start;
-        justify-self: center;
         background-color: white;
         max-width: 500px;
         padding: 20px 15px;
         border-radius: 20px;
-        -webkit-border-radius: 20px;
-        -moz-border-radius: 20px;
-        -ms-border-radius: 20px;
-        -o-border-radius: 20px;
-        transition: all 0.5s ease-in-out;
-        -webkit-transition: all 0.5s ease-in-out;
-        -moz-transition: all 0.5s ease-in-out;
-        -ms-transition: all 0.5s ease-in-out;
-        -o-transition: all 0.5s ease-in-out;
+        @include module.border-radious;
+        @include module.transition;
+        position: relative;
+        left: 50%;
+        transform: translateX(-50%);
+        -webkit-transform: translateX(-50%);
+        -moz-transform: translateX(-50%);
+        -ms-transform: translateX(-50%);
+        -o-transform: translateX(-50%);
 
         &:hover {
             @include module.shadow;
@@ -47,11 +46,7 @@
             @include module.shadow;
         }
 
-        transition: all 0.5s ease-in-out;
-        -webkit-transition: all 0.5s ease-in-out;
-        -moz-transition: all 0.5s ease-in-out;
-        -ms-transition: all 0.5s ease-in-out;
-        -o-transition: all 0.5s ease-in-out;
+        @include module.transition;
 
     }
 
@@ -73,11 +68,7 @@
                 @include module.shadow;
             }
 
-            transition: all 0.5s ease-in-out;
-            -webkit-transition: all 0.5s ease-in-out;
-            -moz-transition: all 0.5s ease-in-out;
-            -ms-transition: all 0.5s ease-in-out;
-            -o-transition: all 0.5s ease-in-out;
+            @include module.transition;
         }
 
         input[type=radio] {
@@ -149,21 +140,14 @@
         color: white;
         font-weight: bolder;
         cursor: pointer;
-        transition: all 0.5s ease-in-out;
-        -webkit-transition: all 0.5s ease-in-out;
-        -moz-transition: all 0.5s ease-in-out;
-        -ms-transition: all 0.5s ease-in-out;
-        -o-transition: all 0.5s ease-in-out;
+        @include module.transition;
 
         &:hover {
             background: transparent;
             color: $primary_color;
         }
 
-        border-radius: 20px;
-        -webkit-border-radius: 20px;
-        -moz-border-radius: 20px;
-        -ms-border-radius: 20px;
-        -o-border-radius: 20px;
+        @include module.border-radious;
+
     }
 }

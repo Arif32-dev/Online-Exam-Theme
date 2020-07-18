@@ -1,1 +1,114 @@
 @use '../common/module';
+
+.teacher-wrap {
+    width: 98%;
+    margin: 20px auto;
+
+    h1 {
+        @include module.h1_tag($primary_color);
+    }
+
+    .teacher_container {
+        width: 98%;
+        margin: 0 auto;
+        display: grid;
+        grid-gap: 20px;
+        grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+    }
+
+    .teacher_info {
+        position: relative;
+        left: 50%;
+        transform: translateX(-50%);
+        -webkit-transform: translateX(-50%);
+        -moz-transform: translateX(-50%);
+        -ms-transform: translateX(-50%);
+        -o-transform: translateX(-50%);
+        align-self: start;
+        max-width: 700px;
+        display: flex;
+        padding: 20px;
+        background-color: white;
+        @include module.transition;
+        @include module.border-radious;
+
+        &:hover {
+            @include module.shadow;
+        }
+    }
+
+    .side_logo {
+        width: 180px;
+        height: 130px;
+        display: block;
+        border: 2px solid $primary_color;
+        overflow: hidden;
+        border-radius: 50%;
+        -webkit-border-radius: 50%;
+        -moz-border-radius: 50%;
+        -ms-border-radius: 50%;
+        -o-border-radius: 50%;
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: 50% 50%;
+        }
+    }
+
+    .teacher_details {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 100%;
+        padding: 0 0 0 20px;
+
+        .row {
+            display: flex;
+            flex-direction: column;
+
+            strong {
+                margin-right: 10px;
+            }
+        }
+
+        a {
+            @include module.btn($primary_color);
+        }
+
+    }
+
+    @media screen and (max-width: 576px) {
+        .teacher_container {
+            grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+        }
+
+        .teacher_info {
+            flex-direction: column;
+            align-items: center;
+            left: 0;
+            transform: translateX(0);
+            -webkit-transform: translateX(0);
+            -moz-transform: translateX(0);
+            -ms-transform: translateX(0);
+            -o-transform: translateX(0);
+        }
+
+        .side_logo {
+            width: 150px;
+            height: 150px;
+            margin-bottom: 20px;
+        }
+
+        .teacher_details {
+            align-items: center;
+            padding: 0;
+
+            a {
+                margin-top: 20px;
+                align-self: center;
+            }
+        }
+    }
+}

@@ -4,66 +4,47 @@
     <div class="info">
         <h1>Gurudayal University</h1>
         <h2>A dream university to read</h2>
-        <button>Read More</button>
+        <a href="<?php echo site_url('/blog') ?> ">Read More</a>
     </div>
 </div>
 
 <section class='dept_wrap'>
     <h1>Our Departments</h1>
     <div class="department">
-        <a>Mathmatics</a>
-        <a>Physics</a>
-        <a>Biology</a>
-        <a>English</a>
-        <a>Bangla</a>
-        <a>Religion</a>
-        <a>Chemistry</a>
-        <a>Economics</a>
+       <?php require_once get_template_directory() . '/public/includes/template/content-department.php'?>
     </div>
 </section>
 <section class="teacher-wrap">
     <h1>Our Teacher's</h1>
     <div class="teacher_container">
-        <div class="teacher_info">
-            <div class="side_logo">
-                <img src="<?php echo get_template_directory_uri() . '/public/assets/img/avatar.png' ?>" alt="">
-            </div>
-            <div class="teacher_details">
-                <div class="row">
-                    <span><strong>Name :</strong>Arifur Rahman Arif</span>
-                    <span><strong>Department :</strong>Computer Science</span>
-                    <span><strong>Phone :</strong>01874127669</span>
-                </div>
-                <a>View Teacher</a>
-            </div>
-        </div>
-        <div class="teacher_info">
-            <div class="side_logo">
-                <img src="<?php echo get_template_directory_uri() . '/public/assets/img/avatar.png' ?>" alt="">
-            </div>
-            <div class="teacher_details">
-                <div class="row">
-                    <span><strong>Name :</strong>Arifur Rahman Arif</span>
-                    <span><strong>Department :</strong>Computer Science</span>
-                    <span><strong>Phone :</strong>01874127669</span>
-                </div>
-                <a>View Teacher</a>
-            </div>
-        </div>
-        <div class="teacher_info">
-            <div class="side_logo">
-                <img src="<?php echo get_template_directory_uri() . '/public/assets/img/avatar.png' ?>" alt="">
-            </div>
-            <div class="teacher_details">
-                <div class="row">
-                    <span><strong>Name :</strong>Arifur Rahman Arif</span>
-                    <span><strong>Department :</strong>Computer Science</span>
-                    <span><strong>Phone :</strong>01874127669</span>
-                </div>
-                <a>View Teacher</a>
-            </div>
-        </div>
+<?php
+$teacher = new WP_Query([
+    'post_type' => 'teacher',
+    'posts_per_page' => 1,
+    'paged' => get_query_var('page'),
+]);
+if ($teacher->have_posts()) {
+    while ($teacher->have_posts()) {
+        $teacher->the_post();
+        get_template_part('./public/includes/template/content', 'teacher');
+    }
+    wp_reset_postdata();
+}
+?>
     </div>
+    <div class="oe-pagination">
+    <span class="pagination_wrap">
+ <?php
+echo paginate_links(
+    [
+        'prev_text' => 'Prev',
+        'next_text' => 'Next',
+        'total' => $teacher->max_num_pages,
+    ]
+);
+?>
+    </span>
+</div>
 </section>
 <section class="notice">
     <h1>Notice Board</h1>

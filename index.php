@@ -24,54 +24,24 @@ Use it to make something cool, have fun, and share what you've learned with othe
 <?php get_header('header.php');?>
 <section class="oe-post-sec">
     <div class="post_container">
-        <div class="post_wrap">
-            <h1>Post Tasdfitle asdf asdfa adsf</h1>
-            <a href="" class="post_img">
-                <img  src="https://images.unsplash.com/photo-1517382738648-6544f2e0d47a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80" alt="">
-            </a>
-            <div class="post_content">
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur excepturi laboriosam alias ipsam dolores, qui aut, atque odit amet aliquid nobis natus commodi quidem tempore ea! Illum quisquam pariatur fuga?
-                </p>
-            </div>
-            <div class="post_details">
-                <span><strong>Posted By :</strong> admin</span>
-                <span><strong>Published Date :</strong> 07/07/2020</span>
-            </div>
-            <a class="view_post" href="">View Post</a>
-        </div>
-        <div class="post_wrap">
-            <h1>Post Tasdfitle asdf asdfa adsf</h1>
-            <a href="" class="post_img">
-                <img  src="https://images.unsplash.com/photo-1517382738648-6544f2e0d47a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80" alt="">
-            </a>
-            <div class="post_content">
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur excepturi laboriosam alias ipsam dolores, qui aut, atque odit amet aliquid nobis natus commodi quidem tempore ea! Illum quisquam pariatur fuga?
-                </p>
-            </div>
-            <div class="post_details">
-                <span><strong>Posted By :</strong> admin</span>
-                <span><strong>Published Date :</strong> 07/07/2020</span>
-            </div>
-            <a class="view_post" href="">View Post</a>
-        </div>
-        <div class="post_wrap">
-            <h1>Post Tasdfitle asdf asdfa adsf</h1>
-            <a href="" class="post_img">
-                <img  src="https://images.unsplash.com/photo-1517382738648-6544f2e0d47a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80" alt="">
-            </a>
-            <div class="post_content">
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur excepturi laboriosam alias ipsam dolores, qui aut, atque odit amet aliquid nobis natus commodi quidem tempore ea! Illum quisquam pariatur fuga?
-                </p>
-            </div>
-            <div class="post_details">
-                <span><strong>Posted By :</strong> admin</span>
-                <span><strong>Published Date :</strong> 07/07/2020</span>
-            </div>
-            <a class="view_post" href="">View Post</a>
-        </div>
+        <?php
+if (have_posts()) {
+    while (have_posts()) {
+        the_post();
+        get_template_part('./public/includes/template/content', get_post_type());
+    }
+}
+?>
     </div>
+    <div class="oe-pagination">
+    <span class="pagination_wrap">
+ <?php
+echo paginate_links(array(
+    'prev_text' => 'Prev',
+    'next_text' => 'Next',
+));
+?>
+    </span>
+</div>
 </section>
 <?php get_footer('footer.php');?>

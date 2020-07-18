@@ -11,6 +11,10 @@ body {
     background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
 }
 
+/* global desing */
+@import './package/design/global.scss';
+/* end of global desing */
+
 /* Header navingtion styling and responsiveness start */
 @import './package/design/header.scss';
 /* Header styling ends here */
@@ -50,3 +54,7 @@ body {
 /* post  section desing */
 @import './package/design/post.scss';
 /* end of post  section desing */
+
+/* single teacher desing */
+@import './package/design/single-teacher.scss';
+/* end of single teacher desing */

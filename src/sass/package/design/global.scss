@@ -1,0 +1,33 @@
+@use '../common/module';
+
+.oe-pagination {
+    width: 98%;
+    margin: 30px auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.pagination_wrap {
+
+    a,
+    span {
+        padding: 10px 20px;
+        text-decoration: none;
+        border: 1px solid $primary_color;
+        color: $primary_color;
+        font-weight: bolder;
+
+        @include module.transition;
+
+        &:hover {
+            background-color: $primary_color;
+            color: white;
+        }
+    }
+
+    .current {
+        background-color: $primary_color;
+        color: white;
+    }
+}

@@ -19,6 +19,7 @@ class OE_function
     public function include_other_class()
     {
         require_once get_theme_file_path() . '/public/includes/class/add-page.php';
+        require_once get_theme_file_path() . '/public/includes/class/theme-support.php';
     }
 }
 new OE_function();
