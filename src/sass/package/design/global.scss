@@ -1,5 +1,41 @@
 @use '../common/module';
 
+* {
+    -webkit-tap-highlight-color: transparent;
+    -moz-tap-highlight-color: transparent;
+    -ms-tap-highlight-color: transparent;
+    -o-tap-highlight-color: transparent;
+
+    ::-moz-selection {
+        /* Code for Firefox */
+        color: white;
+        background: $primary_color;
+    }
+
+    ::-webkit-selection {
+        /* Code for Firefox */
+        color: white;
+        background: $primary_color;
+    }
+
+    ::-ms-selection {
+        /* Code for Firefox */
+        color: white;
+        background: $primary_color;
+    }
+
+    ::-o-selection {
+        /* Code for Firefox */
+        color: white;
+        background: $primary_color;
+    }
+
+    ::selection {
+        color: white;
+        background: $primary_color;
+    }
+}
+
 .oe-pagination {
     width: 98%;
     margin: 30px auto;

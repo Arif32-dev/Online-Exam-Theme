@@ -1,0 +1,26 @@
+@use '../common/module';
+
+.single_post {
+    .desc {
+        color: black;
+        display: flex;
+        flex-direction: column;
+    }
+
+    h1 {
+        align-self: flex-start;
+        color: $primary_color;
+        letter-spacing: 1px;
+    }
+
+    .post_details {
+        display: flex;
+        flex-direction: column;
+        padding: 20px;
+        @include module.transition;
+
+        &:hover {
+            @include module.shadow;
+        }
+    }
+}

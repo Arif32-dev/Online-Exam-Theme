@@ -1,4 +1,5 @@
 <?php get_header('header.php');
+
 class OE_front_page
 {
     public function __construct()
@@ -11,7 +12,6 @@ class OE_front_page
     }
     public function banner_sec()
     {
-
         ?>
           <div class="banner">
                 <div class="overlay"></div>
@@ -26,7 +26,6 @@ class OE_front_page
     }
     public function dept_sec()
     {
-
         ?>
         <section class='dept_wrap'>
                 <h1>Our Departments</h1>

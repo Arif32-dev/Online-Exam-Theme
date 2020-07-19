@@ -11,7 +11,7 @@
                 <span class="login100-form-title">
                     Sign Up
                 </span>
-
+                    <span class="oe-warning" style="display: none">Sorry! Incorrect Password</span>
                 <div class="wrap-input100 validate-input" data-validate="Valid email is required: ex@abc.xyz">
                     <input class="input100" type="text" name="name" placeholder="Enter your name">
                     <span class="focus-input100"></span>
@@ -50,29 +50,14 @@
                     </span>
                 </div>
                 <!-- End of Department -->
-                <div class="wrap-input100 validate-input" data-validate="Password is required">
-                    <input class="input100" type="password" name="pass" placeholder="Password" autocomplete="off">
-                    <span class="focus-input100"></span>
-                    <span class="symbol-input100">
-                        <i class="fa fa-lock" aria-hidden="true"></i>
-                    </span>
-                </div>
-
-                <div class="wrap-input100 validate-input" data-validate="Password is required">
-                    <input class="input100" type="password" name="con_pass" placeholder="Confirm password" autocomplete="off">
-                    <span class="focus-input100"></span>
-                    <span class="symbol-input100">
-                        <i class="fa fa-lock" aria-hidden="true"></i>
-                    </span>
-                </div>
 
                 <div class="container-login100-form-btn">
-                    <button class="login100-form-btn">
+                    <button type="submit" class="login100-form-btn">
                         Sign Up
                     </button>
                 </div>
                 <div class="text-center p-t-136 oe-login">
-                    <a class="txt2" href="#">
+                    <a href="<?php echo site_url('/login') ?>" class="txt2" href="#">
                         Log In to your account
                        <i class="fas fa-arrow-right"></i>
                     </a>

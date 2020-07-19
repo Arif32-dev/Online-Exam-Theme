@@ -13,24 +13,48 @@
 
 <body <?php body_class()?>>
 <?php
-global $post;
+function oe_user_login()
+{
+    if (is_user_logged_in()) {
 
+        ?>
+            <a class="<?php active_link('Login')?>" href="<?php echo esc_url(wp_logout_url(site_url('/login'))) ?>">Log Out</a>
+        <?php
+
+    } else {
+
+        ?>
+            <a class="<?php active_link('Login')?>" href="<?php echo esc_url(site_url('/login')) ?>">Login</a>
+            <a class="<?php active_link('Sign Up')?>" href="<?php echo esc_url(site_url('/sign-up')) ?>">Sign Up</a>
+        <?php
+}
+}
+
+function active_link($link)
+{
+    $page = get_page_by_title($link);
+
+    if (get_queried_object_id() == $page->ID) {
+        echo 'oe-active';
+    } else {
+        echo '';
+    }
+}
 ?>
     <!-- header-start -->
     <header>
             <div class="container">
-                <div class="logo">
+                <a href="<?php echo site_url() ?>" class="logo">
                     <img src="<?php echo get_template_directory_uri() . '/public/assets/img/logo.png' ?>" alt="">
-                </div>
+                </a>
                 <div class="link">
                     <nav>
-                        <a class="oe-active" href="<?php echo site_url('/home') ?>">Home</a>
-                        <a href="<?php echo site_url('/blog') ?>">Blog</a>
-                        <a href="<?php echo site_url('/department') ?>">Department</a>
+                        <a class="<?php active_link('Home')?>" href="<?php echo site_url('/home') ?>">Home</a>
+                        <a class="<?php active_link('Blog')?>"  href="<?php echo site_url('/blog') ?>">Blog</a>
+                        <a class="<?php active_link('Department')?>" href="<?php echo site_url('/department') ?>">Department</a>
                     </nav>
                     <div class="user-cred">
-                        <a href="<?php echo site_url('/login') ?>">Login</a>
-                        <a href="<?php echo site_url('/sign-up') ?>">Sign Up</a>
+                        <?php oe_user_login()?>
                     </div>
                 </div>
                 <div class="hamburger">
@@ -40,11 +64,10 @@ global $post;
                 </div>
                 <div class="mobile_link">
 
-                        <a class="oe-active" href="<?php echo site_url('/home') ?>">Home</a>
-                        <a href="<?php echo site_url('/blog') ?>">Blog</a>
-                        <a href="<?php echo site_url('/department') ?>">Department</a>
-                        <a href="<?php echo site_url('/login') ?>">Login</a>
-                        <a href="<?php echo site_url('/sign-up') ?>">Sign Up</a>
+                        <a class="<?php active_link('Home')?>" href="<?php echo site_url('/home') ?>">Home</a>
+                        <a class="<?php active_link('Blog')?>" href="<?php echo site_url('/blog') ?>">Blog</a>
+                        <a class="<?php active_link('Department')?>" href="<?php echo site_url('/department') ?>">Department</a>
+                        <?php oe_user_login()?>
                 </div>
             </div>
     </header>
