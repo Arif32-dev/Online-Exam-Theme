@@ -37,7 +37,7 @@
                           <input type="email" placeholder="Enter your email" name="email">
                       </div>
                       <div class="textarea">
-                              <label for="msg"><strong>Message :</strong></label>
+                          <label for="msg"><strong>Message :</strong></label>
                           <textarea placeholder="Your message here..." name="msg" cols="30" rows="5"></textarea>
                       </div>
                       <input type="submit" name="oe-contact-form" value="Send">

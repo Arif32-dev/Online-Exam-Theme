@@ -6,7 +6,6 @@ $teacher_data = $wpdb->get_results("SELECT * FROM " . $table . " WHERE teacher_i
 foreach ($teacher_data as $teacher) {
     $table = $wpdb->prefix . 'department';
     $dept_data = $wpdb->get_results("SELECT dept_name FROM " . $table . " WHERE dept_id=" . $teacher->teacher_dept . "");
-
     ?>
   <div class="teacher_info">
             <div class="side_logo">
@@ -21,7 +20,5 @@ foreach ($teacher_data as $teacher) {
                 <a href="<?php echo get_the_permalink() ?> ">View Teacher</a>
             </div>
 </div>
-
   <?php
-
 }
