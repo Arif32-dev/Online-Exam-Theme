@@ -14,111 +14,44 @@ class Add_page
         update_option('page_for_posts', $blog_page_id->ID);
         update_option('show_on_front', 'page');
     }
+    public static function insert_post_arr(string $title)
+    {
+        return [
+            'post_title' => $title,
+            'post_status' => 'publish',
+            'post_type' => 'page',
+            'post_content' => "",
+        ];
+    }
     public static function create_page()
     {
         if (!get_page_by_title('Home')) {
-
-            wp_insert_post(
-                [
-                    'post_title' => 'Home',
-                    'post_status' => 'publish',
-                    'post_type' => 'page',
-                    'post_content' => "",
-
-                ],
-                true
-            );
+            wp_insert_post(self::insert_post_arr('Home'), true);
         }
         if (!get_page_by_title('Blog')) {
-
-            wp_insert_post(
-                [
-                    'post_title' => 'Blog',
-                    'post_status' => 'publish',
-                    'post_type' => 'page',
-                    'post_content' => "",
-
-                ],
-                true
-            );
+            wp_insert_post(self::insert_post_arr('Blog'), true);
         }
         if (!get_page_by_title('Department')) {
-
-            wp_insert_post(
-                [
-                    'post_title' => 'Department',
-                    'post_status' => 'publish',
-                    'post_type' => 'page',
-                    'post_content' => "",
-
-                ],
-                true
-            );
+            wp_insert_post(self::insert_post_arr('Department'), true);
         }
         if (!get_page_by_title('Exam Result')) {
-
-            wp_insert_post(
-                [
-                    'post_title' => 'Exam Result',
-                    'post_status' => 'publish',
-                    'post_type' => 'page',
-                    'post_content' => "",
-
-                ],
-                true
-            );
+            wp_insert_post(self::insert_post_arr('Exam Result'), true);
         }
         if (!get_page_by_title('Previous Result')) {
-
-            wp_insert_post(
-                [
-                    'post_title' => 'Previous Result',
-                    'post_status' => 'publish',
-                    'post_type' => 'page',
-                    'post_content' => "",
-
-                ],
-                true
-            );
+            wp_insert_post(self::insert_post_arr('Previous Result'), true);
         }
         if (!get_page_by_title('Result Folder')) {
-
-            wp_insert_post(
-                [
-                    'post_title' => 'Result Folder',
-                    'post_status' => 'publish',
-                    'post_type' => 'page',
-                    'post_content' => "",
-
-                ],
-                true
-            );
+            wp_insert_post(self::insert_post_arr('Result Folder'), true);
         }
         if (!get_page_by_title('Login')) {
-
-            wp_insert_post(
-                [
-                    'post_title' => 'Login',
-                    'post_status' => 'publish',
-                    'post_type' => 'page',
-                    'post_content' => "",
-
-                ],
-                true
-            );
+            wp_insert_post(self::insert_post_arr('Login'), true);
         }
         if (!get_page_by_title('Sign Up')) {
+            wp_insert_post(self::insert_post_arr('Sign Up'), true);
+        }
 
-            wp_insert_post(
-                [
-                    'post_title' => 'Sign Up',
-                    'post_status' => 'publish',
-                    'post_type' => 'page',
-                    'post_content' => "",
-
-                ],
-                true
-            );
+        if (!get_page_by_title('Verification')) {
+            wp_insert_post(self::insert_post_arr('Verification'), true);
         }
 
     }

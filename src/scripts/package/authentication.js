@@ -12,21 +12,29 @@ jQuery(document).ready(function($) {
         handle_submit(e) {
             e.preventDefault();
             let form_data = $(this).serialize();
-            form_data += '&action=user_login';
-            // console.log(form_data);
             $.ajax({
                 url: files.authentication_page,
                 data: form_data,
                 method: 'post',
                 success: res => {
+                    console.log(res)
                     if (res == 'success') {
                         window.location.href = files.site_url;
+                    } else {
+                        if (res == 'user_registered') {
+                            $(this).find('.input100').val('');
+                            $('.oe-warning').addClass('oe-success');
+                            $('.oe-warning').hide().slideDown().html('Registered successfully. Check your email :)');
+                            $('.reg-btn').attr('disabled', false);
+                        } else {
+                            $('.oe-warning').removeClass('oe-success');
+                            $('.oe-warning').hide().slideDown().html(res);
+                            $('.reg-btn').attr('disabled', false);
+                        }
                     }
-                    if (res == 'Incorrect Password' || res == 'Invalid username' || res == 'Invalid email') {
-                        $('#oe-login-form > .oe-warning').hide().slideDown().html(res);
-                    }
-                }
+                },
             })
+            $('.reg-btn').attr('disabled', true);
         }
     }
     new Authentication();

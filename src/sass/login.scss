@@ -226,6 +226,11 @@
             -ms-transform: translateX(-50%);
             -o-transform: translateX(-50%);
         }
+
+        .oe-success {
+            color: $primary_color;
+            font-weight: bolder;
+        }
     }
 
     .login100-form-title {

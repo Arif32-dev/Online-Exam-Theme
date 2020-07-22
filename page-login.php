@@ -8,20 +8,21 @@
             </div>
 
             <form id="oe-login-form" class="login100-form validate-form">
+                <input type="hidden" name="action" value="user_login">
                 <span class="login100-form-title">
                      Login
                 </span>
                     <span class="oe-warning"  style="display: none">Sorry! Incorrect Password</span>
-                <div class="wrap-input100 validate-input" data-validate="Valid email is required: ex@abc.xyz">
-                    <input class="input100" type="text" name="user" placeholder="Email or Username">
+                <div class="wrap-input100 validate-input">
+                    <input class="input100" type="text" name="user" required  placeholder="Email or Username">
                     <span class="focus-input100"></span>
                     <span class="symbol-input100">
                         <i class="fas fa-user"></i>
                     </span>
                 </div>
 
-                <div class="wrap-input100 validate-input" data-validate="Password is required">
-                    <input class="input100" type="password" name="pass" placeholder="Password" autocomplete="off">
+                <div class="wrap-input100 validate-input" >
+                    <input class="input100" type="password" name="pass" required placeholder="Password" autocomplete="off">
                     <span class="focus-input100"></span>
                     <span class="symbol-input100">
                         <i class="fa fa-lock" aria-hidden="true"></i>

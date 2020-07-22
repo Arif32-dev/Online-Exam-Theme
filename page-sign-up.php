@@ -1,4 +1,21 @@
-<?php get_header('header.php')?>
+<?php
+if (is_user_logged_in()) {
+    wp_redirect(site_url('/'));
+    exit;
+}
+get_header('header.php');
+function oe_department()
+{
+    global $wpdb;
+    $table = $wpdb->prefix . 'department';
+    $dept_data = $wpdb->get_results("SELECT * FROM " . $table . "");
+    foreach ($dept_data as $dept) {
+        echo '
+            <option value="' . $dept->dept_id . '">' . $dept->dept_name . '</option>
+        ';
+    }
+}
+?>
   <link rel="stylesheet" type="text/css" href="<?php echo get_template_directory_uri() . '/public/assets/css/login.min.css' ?>">
 <div class="limiter">
     <div class="container-login100">
@@ -8,28 +25,53 @@
             </div>
 
             <form id="oe-reg" class="login100-form validate-form" autocomplete="off">
+                <input type="hidden" name="action" value="user_sign_up">
                 <span class="login100-form-title">
                     Sign Up
                 </span>
-                    <span class="oe-warning" style="display: none">Sorry! Incorrect Password</span>
-                <div class="wrap-input100 validate-input" data-validate="Valid email is required: ex@abc.xyz">
-                    <input class="input100" type="text" name="name" placeholder="Enter your name">
+                    <span class="oe-warning" style="display:none; white-space: nowrap">Sorry! Incorrect Password</span>
+                <div class="wrap-input100 validate-input" >
+                    <input class="input100" type="text" name="name" required placeholder="Enter your name">
                     <span class="focus-input100"></span>
                     <span class="symbol-input100">
                         <i class="fas fa-user"></i>
                     </span>
                 </div>
 
-                <div class="wrap-input100 validate-input" data-validate="Valid email is required: ex@abc.xyz">
-                    <input class="input100" type="email" name="email" placeholder="Email">
+                <div class="wrap-input100 validate-input">
+                    <input class="input100" type="text" name="user_name"  required placeholder="Enter user name">
+                    <span class="focus-input100"></span>
+                    <span class="symbol-input100">
+                        <i class="fas fa-user"></i>
+                    </span>
+                </div>
+
+                <div class="wrap-input100 validate-input" >
+                    <input class="input100" type="email" name="email" required placeholder="Enter your email">
                     <span class="focus-input100"></span>
                     <span class="symbol-input100">
                         <i class="fa fa-envelope" aria-hidden="true"></i>
                     </span>
                 </div>
 
-                <div class="wrap-input100 validate-input" data-validate="Valid email is required: ex@abc.xyz">
-                    <input class="input100" type="number" name="phn_number" placeholder="Phone number">
+                <div class="wrap-input100 validate-input" >
+                    <input class="input100" type="password" name="pass" required placeholder="Enter your password" autocomplete="off">
+                    <span class="focus-input100"></span>
+                    <span class="symbol-input100">
+                        <i class="fa fa-lock" aria-hidden="true"></i>
+                    </span>
+                </div>
+
+                <div class="wrap-input100 validate-input" >
+                    <input class="input100" type="password" name="conf_pass" required placeholder="Confirm password" autocomplete="off">
+                    <span class="focus-input100"></span>
+                    <span class="symbol-input100">
+                        <i class="fa fa-lock" aria-hidden="true"></i>
+                    </span>
+                </div>
+
+                <div class="wrap-input100 validate-input" >
+                    <input class="input100" type="number" name="phn_number" required placeholder="Phone number">
                     <span class="focus-input100"></span>
                     <span class="symbol-input100">
                         <i class="fas fa-phone-alt"></i>
@@ -37,12 +79,9 @@
                 </div>
                 <!-- Department -->
                 <div class="wrap-input100 dept_sec">
-                    <select name="department" form="oe-reg" >
+                    <select required name="department" form="oe-reg" >
                         <option value="" hidden selected disabled>Select Department</option>
-                        <option value="">Math</option>
-                        <option value="">Physics</option>
-                        <option value="">English</option>
-                        <option value="">Biology</option>
+                            <?php oe_department();?>
                     </select>
                     <span class="focus-input100"></span>
                     <span class="symbol-input100">
@@ -52,7 +91,7 @@
                 <!-- End of Department -->
 
                 <div class="container-login100-form-btn">
-                    <button type="submit" class="login100-form-btn">
+                    <button  type="submit" class="login100-form-btn reg-btn">
                         Sign Up
                     </button>
                 </div>
