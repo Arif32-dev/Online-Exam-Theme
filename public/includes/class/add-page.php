@@ -49,9 +49,11 @@ class Add_page
         if (!get_page_by_title('Sign Up')) {
             wp_insert_post(self::insert_post_arr('Sign Up'), true);
         }
-
         if (!get_page_by_title('Verification')) {
             wp_insert_post(self::insert_post_arr('Verification'), true);
+        }
+        if (!get_page_by_title('Lost Password')) {
+            wp_insert_post(self::insert_post_arr('Lost Password'), true);
         }
 
     }

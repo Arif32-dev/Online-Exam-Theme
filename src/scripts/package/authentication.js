@@ -3,6 +3,7 @@ jQuery(document).ready(function($) {
         constructor() {
             this.login_form = $('#oe-login-form');
             this.reg_form = $('#oe-reg');
+            this.reg_form = $('#oe-recover');
             this.events();
         }
         events() {
@@ -21,10 +22,11 @@ jQuery(document).ready(function($) {
                     if (res == 'success') {
                         window.location.href = files.site_url;
                     } else {
-                        if (res == 'user_registered') {
+                        if (res == 'user_registered' || res == 'recovered') {
+                            let text = res == 'recovered' ? "Please check your inbox" : "Registered successfully. Check your email :)";
                             $(this).find('.input100').val('');
                             $('.oe-warning').addClass('oe-success');
-                            $('.oe-warning').hide().slideDown().html('Registered successfully. Check your email :)');
+                            $('.oe-warning').hide().slideDown().html(text);
                             $('.reg-btn').attr('disabled', false);
                         } else {
                             $('.oe-warning').removeClass('oe-success');

@@ -1,11 +1,10 @@
 <?php
 require_once dirname(dirname(dirname(dirname(dirname(dirname(dirname(__FILE__))))))) . '/wp-load.php';
-require_once dirname(dirname(dirname(dirname(dirname(dirname(dirname(__FILE__))))))) . '/wp-includes/class-phpmailer.php';
-require_once dirname(dirname(dirname(dirname(dirname(dirname(dirname(__FILE__))))))) . '/wp-includes/class-smtp.php';
-require_once './Exception.php';
-class Authentication
+require_once '../class/mail.php';
+class Authentication extends Base_mail
 {
     private $post_data;
+    private $new_pass;
     public function __construct()
     {
         $this->post_data = $_POST;
@@ -18,6 +17,13 @@ class Authentication
         }
         if ($this->post_data['action'] == 'user_sign_up') {
             $this->user_checking();
+        }
+        if ($this->post_data['action'] == 'lost_pass') {
+            if (username_exists($this->post_data['user']) || email_exists($this->post_data['user'])) {
+                $this->lost_password();
+            } else {
+                echo "User don't exists. Please try again";
+            }
         }
     }
     public function user_login()
@@ -77,67 +83,14 @@ class Authentication
         if ($res) {
             echo 'Email already exists.';
         } else {
-            $this->send_verification_mail();
-        }
-    }
-
-    public function send_verification_mail()
-    {
-        $mail = new PHPMailer(true);
-
-        $mail->isSMTP(); // Send using SMTP
-        $mail->Host = 'smtp.gmail.com'; // Set the SMTP server to send through
-        $mail->SMTPAuth = true; // Enable SMTP authentication
-        $mail->Username = '' . get_option('mailer_gmail') . ''; // SMTP username
-        $mail->Password = '' . get_option('mailer_pass') . ''; // SMTP password
-        $mail->SMTPSecure = 'tls'; // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` encouraged
-        $mail->Port = 587; // TCP port to connect to, use 465 for `PHPMailer::ENCRYPTION_SMTPS` above
-
-        //Recipients
-        $mail->setFrom('' . get_option('mailer_gmail') . '', '' . get_bloginfo('name') . '');
-        $mail->addAddress('' . $this->post_data['email'] . '', 'User'); // Add a recipient
-
-        $mail->isHTML(true); // Set email format to HTML
-        $mail->Subject = 'Email Confirmation';
-        $mail->Body = '
-                <h3 style="color: green">Your account is being registered. Please click the link below to verify your account</h3>
-                <h3>
-                <a
-                style="
-                text-decoration: none;
-                outline: none;
-                padding: 7px 12px;
-                font-size: 12px;
-                letter-spacing: 1px;
-                border: 1px solid #3cc78f;
-                background-color: #3cc78f;
-                white-space: nowrap;
-                color: white;
-                font-weight: bolder;
-                cursor: pointer;
-                border-radius: 20px;
-                -webkit-border-radius: 20px;
-                -moz-border-radius: 20px;
-                -ms-border-radius: 20px;
-                -o-border-radius: 20px;
-                 transition: all 0.5s ease-in-out;
-                -webkit-transition: all 0.5s ease-in-out;
-                -moz-transition: all 0.5s ease-in-out;
-                -ms-transition: all 0.5s ease-in-out;
-                -o-transition: all 0.5s ease-in-out;
-                "
-                href="' . site_url('/verification?std_id=' . md5(sanitize_text_field($this->post_data['email'])) . '') . '" target="_blank"
-                >Verify Account</a>
-                </h3>
-            ';
-        $mail->AltBody = '
-                Please confirm your email by clicking this link
-                ' . site_url('/verification?std_id=' . md5(sanitize_text_field($this->post_data['email'])) . '') . '
-            ';
-        if ($mail->send()) {
-            $this->user_create();
-        } else {
-            echo 'Something went wrong';
+            $site_url = site_url('/verification?std_id=' . md5(sanitize_text_field($this->post_data['email'])));
+            $mail_text = "Your account is being registered. Please click the link below to verify your account";
+            $alt_text = "Please confirm your email by clicking this link";
+            if ($this->send_mail($this->post_data['email'], $site_url, $mail_text, 'Verify Account', $alt_text)) {
+                $this->user_create();
+            } else {
+                echo 'Something went wrong';
+            }
         }
     }
     public function user_create()
@@ -177,6 +130,31 @@ class Authentication
             echo "user_registered";
         } else {
             echo 'failed';
+        }
+    }
+    public function lost_password()
+    {
+        if (get_user_by('email', sanitize_text_field($this->post_data['user']))) {
+            $user_data = get_user_by('email', sanitize_text_field($this->post_data['user']));
+            $this->new_pass = wp_generate_password();
+        } else {
+            $user_data = get_user_by('login', sanitize_text_field($this->post_data['user']));
+            $this->new_pass = wp_generate_password();
+        }
+        $user_id = wp_update_user([
+            'ID' => $user_data->data->ID,
+            'user_pass' => $this->new_pass,
+        ]);
+        if (is_int($user_id)) {
+            $site_url = site_url('/login?email=' . $user_data->data->user_email . '&pass=' . $this->new_pass . '');
+            $mail_text = "Your Login Email : " . $user_data->data->user_email . "  & Your Password : <strong style='color: black;'>" . $this->new_pass . "</strong>";
+            if ($this->send_mail($user_data->data->user_email, $site_url, $mail_text, 'Log In', $mail_text)) {
+                echo 'recovered';
+            } else {
+                echo 'Something went wrong';
+            }
+        } else {
+            echo 'Something went wrong';
         }
     }
 }
