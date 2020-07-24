@@ -88,16 +88,14 @@ class Authentication
         $mail->isSMTP(); // Send using SMTP
         $mail->Host = 'smtp.gmail.com'; // Set the SMTP server to send through
         $mail->SMTPAuth = true; // Enable SMTP authentication
-        $mail->Username = 'dxridder0024@gmail.com'; // SMTP username
-        $mail->Password = 'kishoregonj999@BD'; // SMTP password
+        $mail->Username = '' . get_option('mailer_gmail') . ''; // SMTP username
+        $mail->Password = '' . get_option('mailer_pass') . ''; // SMTP password
         $mail->SMTPSecure = 'tls'; // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` encouraged
         $mail->Port = 587; // TCP port to connect to, use 465 for `PHPMailer::ENCRYPTION_SMTPS` above
 
         //Recipients
-        $mail->setFrom('dxridder0024@gmail.com', '' . get_bloginfo('name') . '');
+        $mail->setFrom('' . get_option('mailer_gmail') . '', '' . get_bloginfo('name') . '');
         $mail->addAddress('' . $this->post_data['email'] . '', 'User'); // Add a recipient
-        $mail->addAddress('dxridder0024@gmail.com'); // Name is optional
-        $mail->addReplyTo('dxridder0024@gmail.com', 'No reply');
 
         $mail->isHTML(true); // Set email format to HTML
         $mail->Subject = 'Email Confirmation';

@@ -1,3 +1,7 @@
+<?php
+require_once dirname(dirname(dirname(get_template_directory()))) . '/wp-includes/class-phpmailer.php';
+require_once dirname(dirname(dirname(get_template_directory()))) . '/wp-includes/class-smtp.php';
+?>
 <?php get_header('header.php')?>
 <?php
 if (isset($_GET['std_id'])) {
@@ -38,9 +42,43 @@ if (isset($_GET['std_id'])) {
                 ]
             );
             if ($respond) {
-                $sub = "Verification";
-                $msg = '<h3>Your account is verified</h3> <br>
-               <h3>
+                $class = "ver_msg";
+                $msg = "Your account is verfied. Log in to view you account";
+                send_login_email($res[0]->std_email);
+            } else {
+                $class = "ver_error";
+                $msg = "Either your account is verified or invalid";
+            }
+        } else {
+            $class = "ver_error";
+            $msg = "Something went wrong";
+        }
+    } else {
+        $class = "ver_error";
+        $msg = "Either your account is verified or invalid";
+    }
+}
+function send_login_email($email)
+{
+    $mail = new PHPMailer(true);
+
+    $mail->isSMTP(); // Send using SMTP
+    $mail->Host = 'smtp.gmail.com'; // Set the SMTP server to send through
+    $mail->SMTPAuth = true; // Enable SMTP authentication
+    $mail->Username = '' . get_option('mailer_gmail') . ''; // SMTP username
+    $mail->Password = '' . get_option('mailer_pass') . ''; // SMTP password
+    $mail->SMTPSecure = 'tls'; // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` encouraged
+    $mail->Port = 587; // TCP port to connect to, use 465 for `PHPMailer::ENCRYPTION_SMTPS` above
+
+//Recipients
+    $mail->setFrom('' . get_option('mailer_gmail') . '', '' . get_bloginfo('name') . '');
+    $mail->addAddress('' . $email . '', 'User'); // Add a recipient
+
+    $mail->isHTML(true); // Set email format to HTML
+    $mail->Subject = 'Registration Successfull';
+    $mail->Body = '
+                <h3 style="color: green">Your account is being registered successfully. Log in to your account by clicking this link</h3>
+                <h3>
                 <a
                 style="
                 text-decoration: none;
@@ -65,24 +103,16 @@ if (isset($_GET['std_id'])) {
                 -ms-transition: all 0.5s ease-in-out;
                 -o-transition: all 0.5s ease-in-out;
                 "
-                href="' . site_url('/login') . '" target="_blank"
-                >Verify Account</a>
+                href="' . site_url('/login') . ' " target="_blank"
+                >Login to your account</a>
                 </h3>
-               ';
-                wp_mail($res[0]->std_email, $sub, $msg);
-                $class = "ver_msg";
-                $msg = "Your account is verfied. Log in to view you account";
-            } else {
-                $class = "ver_error";
-                $msg = "Either your account is verified or invalid";
-            }
-        } else {
-            $class = "ver_error";
-            $msg = "Something went wrong";
-        }
-    } else {
-        $class = "ver_error";
-        $msg = "Either your account is verified or invalid";
+            ';
+    $mail->AltBody = '
+                Please confirm your email by clicking this link
+                ' . site_url('/login') . '
+            ';
+    if (!$mail->send()) {
+        echo "Mail couldn't sent";
     }
 }
 ?>
