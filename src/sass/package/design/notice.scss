@@ -13,18 +13,23 @@
         display: flex;
         flex-wrap: wrap;
 
+        .previous {
+            padding-bottom: 20px;
+        }
+
         div {
             align-self: flex-start;
             width: 48%;
             min-width: 350px;
             margin: 0 auto;
             background-color: white;
-            cursor: pointer;
+            height: auto;
+            display: block;
 
             h2 {
                 position: relative;
                 text-align: center;
-                padding: 10px 0;
+                padding: 10px 0 20px 0;
 
                 &::after {
                     content: "";
@@ -42,7 +47,7 @@
                 }
             }
 
-            a {
+            div {
                 padding: 10px 15px 20px 15px;
                 display: block;
                 width: 94%;
@@ -65,6 +70,18 @@
                 -moz-transition: all 0.5s ease-in-out;
                 -ms-transition: all 0.5s ease-in-out;
                 -o-transition: all 0.5s ease-in-out;
+            }
+
+            .view_all {
+                @include module.btn($primary_color);
+                padding: 10px 15px;
+                position: relative;
+                left: 50%;
+                transform: translateX(-50%);
+                -webkit-transform: translateX(-50%);
+                -moz-transform: translateX(-50%);
+                -ms-transform: translateX(-50%);
+                -o-transform: translateX(-50%);
             }
 
             &:hover {

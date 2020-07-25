@@ -56,7 +56,25 @@ class Single_post
     {
 
         ?>
-        <h1>comment_sec</h1>
+            <div class="contact_container">
+                <div class="contact_form">
+                    <form action="">
+                        <div>
+                            <label for="name"><strong>Name :</strong></label>
+                            <input type="text" required  placeholder="Enter your name" name="name">
+                        </div>
+                        <div>
+                            <label for="email"><strong>Email :</strong></label>
+                            <input type="email" required placeholder="Enter your email" name="email">
+                        </div>
+                        <div class="textarea">
+                            <label for="msg"><strong>Comment :</strong></label>
+                            <textarea required placeholder="Your comment here..." name="msg" cols="30" rows="5"></textarea>
+                        </div>
+                        <input type="submit" name="oe-contact-form" value="Comment">
+                    </form>
+                </div>
+            </div>
         <?php
 
     }

@@ -96,34 +96,75 @@ class OE_front_page
             <section class="notice">
                 <h1>Notice Board</h1>
                 <div class="notice_container">
-                    <div href="http://www.facebook.com" class="upcoming">
+                    <div class="upcoming">
                         <h2>Upcoming Exam's</h2>
-                        <a href="http://www.facebook.com">
-                            <h3>Department : Biology</h3>
-                            <h3>Exam Name : Biology Exam</h3>
-                            <span><strong>Date :</strong>10/07/2020</span>
-                        </a>
+                            <?php $this->upcoming_notice()?>
                     </div>
                     <div class="previous">
                         <h2>Previous Exam's</h2>
-                        <a>
-                            <h3>Department : Mathmatics</h3>
-                            <h3>Exam Name : Math Exam</h3>
-                            <span><strong>Date :</strong>10/07/2020</span>
-                        </a>
-                        <a>
-                            <h3>Department : Mathmatics</h3>
-                            <h3>Exam Name : Math Exam</h3>
-                            <span><strong>Date :</strong>10/07/2020</span>
-                        </a>
-                        <a>
-                            <h3>Department : Mathmatics</h3>
-                            <h3>Exam Name : Math Exam</h3>
-                            <span><strong>Date :</strong>10/07/2020</span>
-                        </a>
-                    </div>
+                        <?php $this->previous_notice()?>
+                        <?php $this->view_btn()?>
+                     </div>
                 </div>
             </section>
+        <?php
+
+    }
+    public function upcoming_notice()
+    {
+        global $wpdb;
+        $table = $wpdb->prefix . 'exam_routine';
+        $notices = $wpdb->get_results("SELECT * FROM " . $table . " WHERE exam_date > CURDATE()");
+        if (!$notices) {
+            return;
+        }
+        foreach ($notices as $notice) {
+            $table = $wpdb->prefix . 'department';
+            $dept_data = $wpdb->get_results("SELECT * FROM " . $table . " WHERE dept_id=" . $notice->dept_id . "");
+
+            ?>
+                <div >
+                    <h3>Department : <?php echo $dept_data[0]->dept_name ?></h3>
+                    <h3>Exam Name : <?php echo $notice->exam_name ?></h3>
+                    <span><strong>Date :</strong><?php echo date_format(date_create($notice->exam_date), "d-M-Y") ?></span>
+                </div>
+            <?php
+
+        }
+    }
+    public function previous_notice()
+    {
+        global $wpdb;
+        $table = $wpdb->prefix . 'exam_routine';
+        $notices = $wpdb->get_results("SELECT * FROM " . $table . " WHERE exam_date <= CURDATE() LIMIT 3");
+        if (!$notices) {
+            return;
+        }
+        foreach ($notices as $notice) {
+            $table = $wpdb->prefix . 'department';
+            $dept_data = $wpdb->get_results("SELECT * FROM " . $table . " WHERE dept_id=" . $notice->dept_id . "");
+
+            ?>
+                <div>
+                    <h3>Department : <?php echo $dept_data[0]->dept_name ?></h3>
+                    <h3>Exam Name : <?php echo $notice->exam_name ?></h3>
+                    <span><strong>Date :</strong><?php echo date_format(date_create($notice->exam_date), "d-M-Y") ?></span>
+                </div>
+            <?php
+
+        }
+    }
+    public function view_btn()
+    {
+        global $wpdb;
+        $table = $wpdb->prefix . 'exam_routine';
+        $res = $wpdb->get_results("SELECT * FROM " . $table . " WHERE exam_date <= CURDATE() LIMIT 99 OFFSET 3");
+        if (!$res) {
+            return;
+        }
+
+        ?>
+             <a class="view_all" href="<?php echo site_url('/previous-routine') ?>">View all</a>
         <?php
 
     }

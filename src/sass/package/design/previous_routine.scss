@@ -1,0 +1,58 @@
+@use '../common/module';
+
+.prev_routine {
+    width: 98%;
+    margin: 20px auto;
+
+    h1 {
+        @include module.h1_tag($primary_color);
+    }
+
+    .prev_exam_container {
+        width: 98%;
+        margin: 20px auto;
+        display: grid;
+        grid-gap: 20px;
+        grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+    }
+
+    .routine_detail_con {
+        background-color: white;
+        padding: 20px;
+        @include module.border-radious;
+        @include module.transition;
+        position: relative;
+        left: 50%;
+        transform: translateX(-50%);
+        -webkit-transform: translateX(-50%);
+        -moz-transform: translateX(-50%);
+        -ms-transform: translateX(-50%);
+        -o-transform: translateX(-50%);
+        align-self: start;
+        max-width: 600px;
+
+        &:hover {
+            @include module.shadow;
+        }
+
+        div {
+
+            h3,
+            span,
+            strong {
+                white-space: nowrap;
+
+            }
+
+            strong {
+                margin-right: 5px;
+            }
+        }
+    }
+
+    @media screen and (max-width: 560px) {
+        .prev_exam_container {
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        }
+    }
+}

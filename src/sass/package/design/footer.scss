@@ -1,3 +1,5 @@
+@use '../common/module';
+
 footer {
     width: 98%;
     margin: 20px auto;
@@ -83,11 +85,8 @@ footer {
                         outline: none;
                         border: 1px solid white;
                         margin-left: 20px;
-                        border-radius: 20px;
-                        -webkit-border-radius: 20px;
-                        -moz-border-radius: 20px;
-                        -ms-border-radius: 20px;
-                        -o-border-radius: 20px;
+                        @include module.border-radious;
+
                     }
 
                     textarea {
@@ -100,11 +99,7 @@ footer {
                     input,
                     textarea {
                         cursor: auto;
-                        transition: all 0.5s ease-in-out;
-                        -webkit-transition: all 0.5s ease-in-out;
-                        -moz-transition: all 0.5s ease-in-out;
-                        -ms-transition: all 0.5s ease-in-out;
-                        -o-transition: all 0.5s ease-in-out;
+                        @include module.transition;
                     }
 
                     input:focus,
@@ -150,16 +145,9 @@ footer {
                     font-size: 15px;
                     cursor: pointer;
                     color: $primary_color;
-                    border-radius: 20px;
-                    -webkit-border-radius: 20px;
-                    -moz-border-radius: 20px;
-                    -ms-border-radius: 20px;
-                    -o-border-radius: 20px;
-                    transition: all 0.5s ease-in-out;
-                    -webkit-transition: all 0.5s ease-in-out;
-                    -moz-transition: all 0.5s ease-in-out;
-                    -ms-transition: all 0.5s ease-in-out;
-                    -o-transition: all 0.5s ease-in-out;
+                    @include module.border-radious;
+                    @include module.transition;
+
 
                     &:hover {
                         border: 1px solid black;
@@ -170,9 +158,5 @@ footer {
         }
     }
 
-    border-radius: 20px;
-    -webkit-border-radius: 20px;
-    -moz-border-radius: 20px;
-    -ms-border-radius: 20px;
-    -o-border-radius: 20px;
+    @include module.border-radious;
 }

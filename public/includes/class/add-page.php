@@ -55,6 +55,9 @@ class Add_page
         if (!get_page_by_title('Lost Password')) {
             wp_insert_post(self::insert_post_arr('Lost Password'), true);
         }
+        if (!get_page_by_title('Previous Routine')) {
+            wp_insert_post(self::insert_post_arr('Previous Routine'), true);
+        }
 
     }
 }
