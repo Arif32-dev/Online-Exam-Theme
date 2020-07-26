@@ -3,12 +3,13 @@ jQuery(document).ready(function($) {
         constructor() {
             this.login_form = $('#oe-login-form');
             this.reg_form = $('#oe-reg');
-            this.reg_form = $('#oe-recover');
+            this.recover = $('#oe-recover');
             this.events();
         }
         events() {
             this.login_form.on('submit', this.handle_submit)
             this.reg_form.on('submit', this.handle_submit)
+            this.recover.on('submit', this.handle_submit)
         }
         handle_submit(e) {
             e.preventDefault();
