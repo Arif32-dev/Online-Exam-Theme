@@ -55,9 +55,10 @@ class OE_verification extends Base_mail
                         $this->msg = "Your account is verfied. Log in to view you account";
                         $site_url = site_url('/login');
                         $mail_text = "Your account is being registered successfully. Log in to your account by clicking this link";
+                        $subject = "Account Verification";
                         $alt_text = "Your account is being registered successfully. Log in to your account by clicking this link";
 
-                        if (!$this->send_mail($res[0]->std_email, $site_url, $mail_text, 'Login to your account', $alt_text)) {
+                        if (!$this->send_mail($res[0]->std_email, get_option('mailer_gmail'), $site_url, $subject, $mail_text, 'Login to your account', $alt_text, true)) {
                             echo "Mail couldn't sent";
                         }
                     } else {

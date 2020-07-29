@@ -36,6 +36,11 @@ jQuery(document).ready(function($) {
                         }
                     }
                 },
+                error: (err) => {
+                    $('.oe-warning').removeClass('oe-success');
+                    $('.oe-warning').hide().slideDown().html("Something went wrong");
+                    $('.reg-btn').attr('disabled', false);
+                }
             })
             $('.reg-btn').attr('disabled', true);
         }

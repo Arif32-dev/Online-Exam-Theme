@@ -6,7 +6,7 @@ require_once dirname(dirname(dirname(dirname(dirname(dirname(dirname(__FILE__)))
 class Base_mail
 {
 
-    public function send_mail($email, $site_url, $mail_text, $btn_text, $alt_text)
+    public function send_mail($email, $reply_email, $site_url, $subject, $mail_text, $btn_text, $alt_text, $should_use_btn)
     {
 
         $mail = new PHPMailer(true);
@@ -22,10 +22,11 @@ class Base_mail
         //Recipients
         $mail->setFrom('' . get_option('mailer_gmail') . '', '' . get_bloginfo('name') . '');
         $mail->addAddress('' . $email . '', 'User'); // Add a recipient
-
+        $mail->addReplyTo('' . $reply_email . '', 'Reply');
         $mail->isHTML(true); // Set email format to HTML
-        $mail->Subject = 'Email Confirmation';
-        $mail->Body = '
+        $mail->Subject = '' . $subject . '';
+        if ($should_use_btn) {
+            $mail->Body = '
                 <h3 style="color: green">' . $mail_text . '</h3>
                 <h3>
                 <a
@@ -56,10 +57,17 @@ class Base_mail
                 >' . $btn_text . '</a>
                 </h3>
             ';
-        $mail->AltBody = '
+            $mail->AltBody = '
                 ' . $alt_text . '
                 ' . $site_url . '
             ';
+        } else {
+            $mail->Body = '
+                <h3>' . $mail_text . '</h3>';
+            $mail->AltBody = '
+                ' . $alt_text . '
+            ';
+        }
         return $mail->send();
     }
 }

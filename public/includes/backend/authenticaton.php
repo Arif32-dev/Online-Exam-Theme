@@ -25,6 +25,9 @@ class Authentication extends Base_mail
                 echo "User don't exists. Please try again";
             }
         }
+        if ($this->post_data['action'] == 'contact_us') {
+            $this->contact_form();
+        }
     }
     public function user_login()
     {
@@ -66,11 +69,11 @@ class Authentication extends Base_mail
             return;
         }
         if (username_exists($this->post_data['user_name'])) {
-            echo 'Username exists.';
+            echo 'Username exists';
             return;
         }
         if (email_exists($this->post_data['email'])) {
-            echo 'Email already exists.';
+            echo 'Email already exists';
             return;
         }
         $this->db_checking();
@@ -84,9 +87,10 @@ class Authentication extends Base_mail
             echo 'Email already exists.';
         } else {
             $site_url = site_url('/verification?std_id=' . md5(sanitize_text_field($this->post_data['email'])));
+            $subject = "Account Registration";
             $mail_text = "Your account is being registered. Please click the link below to verify your account";
             $alt_text = "Please confirm your email by clicking this link";
-            if ($this->send_mail($this->post_data['email'], $site_url, $mail_text, 'Verify Account', $alt_text)) {
+            if ($this->send_mail($this->post_data['email'], get_option('mailer_gmail'), $site_url, $subject, $mail_text, 'Verify Account', $alt_text, true)) {
                 $this->user_create();
             } else {
                 echo 'Something went wrong';
@@ -147,14 +151,35 @@ class Authentication extends Base_mail
         ]);
         if (is_int($user_id)) {
             $site_url = site_url('/login?email=' . $user_data->data->user_email . '&pass=' . $this->new_pass . '');
+            $subject = "Account Registration";
             $mail_text = "Your Login Email : " . $user_data->data->user_email . "  & Your Password : <strong style='color: black;'>" . $this->new_pass . "</strong>";
-            if ($this->send_mail($user_data->data->user_email, $site_url, $mail_text, 'Log In', $mail_text)) {
+            if ($this->send_mail($user_data->data->user_email, get_option('mailer_gmail'), $site_url, $subject, $mail_text, 'Log In', $mail_text, true)) {
                 echo 'recovered';
             } else {
                 echo 'Something went wrong';
             }
         } else {
             echo 'Something went wrong';
+        }
+    }
+    public function contact_form()
+    {
+        $subject = "Contact Messege";
+        $mail_text = "" . $this->post_data['msg'] . "";
+        if (is_user_logged_in()) {
+            $user_data = get_userdata(get_current_user_id());
+            if ($this->send_mail(get_option('mailer_gmail'), $user_data->data->user_email, '', $subject, $mail_text, '', $mail_text, false)) {
+                echo 'contact_us_success';
+            } else {
+                echo 'Something went wrong';
+            }
+        } else {
+
+            if ($this->send_mail(get_option('mailer_gmail'), $this->post_data['email'], '', $subject, $mail_text, '', $mail_text, false)) {
+                echo 'contact_us_success';
+            } else {
+                echo 'Something went wrong';
+            }
         }
     }
 }

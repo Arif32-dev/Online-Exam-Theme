@@ -18,6 +18,7 @@ class OE_function
         wp_localize_script('online-exam_main', 'files', [
             'site_url' => site_url(),
             'authentication_page' => get_template_directory_uri() . '/public/includes/backend/authenticaton.php',
+            'comment_file' => get_template_directory_uri() . '/public/includes/backend/comment.php',
         ]);
     }
     public function include_other_class()

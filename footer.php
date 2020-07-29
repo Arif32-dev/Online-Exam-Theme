@@ -1,4 +1,23 @@
   <!-- footer_start  -->
+  <?php
+
+function get_extra_field()
+{
+
+    ?>
+            <div>
+                    <label for="name"><strong>Name :</strong></label>
+                    <input class="input" type="text" required placeholder="Enter your name" name="name">
+             </div>
+            <div>
+                    <label for="email"><strong>Email :</strong></label>
+                    <input class="input" type="email" required placeholder="Enter your email" name="email">
+            </div>
+    <?php
+
+}
+
+?>
   <footer class="footer">
       <h1>GET IN TOUCH</h1>
       <div class="footer_wrapper">
@@ -27,20 +46,15 @@
           </div>
           <div class="contact_container">
               <div class="contact_form">
-                  <form action="">
-                      <div>
-                          <label for="name"><strong>Name :</strong></label>
-                          <input type="text" placeholder="Enter your name" name="name">
-                      </div>
-                      <div>
-                          <label for="email"><strong>Email :</strong></label>
-                          <input type="email" placeholder="Enter your email" name="email">
-                      </div>
+                  <form id="oe-contact-us-form">
+                      <input type="hidden" name="action" value="contact_us">
+                      <span style="display:none;" class="sent-msg"></span>
+                      <?php !is_user_logged_in() ? get_extra_field() : ""?>
                       <div class="textarea">
                           <label for="msg"><strong>Message :</strong></label>
-                          <textarea placeholder="Your message here..." name="msg" cols="30" rows="5"></textarea>
+                          <textarea required class="input" placeholder="Your message here..." name="msg" cols="30" rows="5"></textarea>
                       </div>
-                      <input type="submit" name="oe-contact-form" value="Send">
+                      <input class="reg-btn" type="submit" value="Send">
                   </form>
               </div>
           </div>

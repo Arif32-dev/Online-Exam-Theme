@@ -60,99 +60,112 @@ footer {
                 -o-transition: all 0.5s ease-in-out;
             }
         }
+    }
 
-        .contact_container {
-            margin: 30px auto;
+    .contact_container {
+        margin: 30px auto;
 
-            form {
-                width: 100%;
+        form {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+
+            span {
+                margin: 10px 20px;
+            }
+
+            .error-msg {
+                color: rgba(231, 68, 68, 0.849);
+            }
+
+            div {
+                margin: 10px 20px;
                 display: flex;
+                align-items: center;
+                width: 40%;
+                display: flex;
+                justify-content: space-between;
+
+                input {
+                    width: 70%;
+                    padding: 10px 20px;
+                    background-color: transparent;
+                    outline: none;
+                    border: 1px solid white;
+                    margin-left: 20px;
+                    @include module.border-radious;
+
+                }
+
+                textarea {
+                    width: 98%;
+                    outline: none;
+                    border: 1px solid white;
+                    padding: 10px;
+                }
+
+                input,
+                textarea {
+                    cursor: auto;
+                    color: white;
+                    @include module.transition;
+                }
+
+                textarea {
+                    color: black;
+                }
+
+                input:focus,
+                textarea:focus {
+                    border: 1px solid black;
+                }
+
+                @media screen and (max-width: 870px) {
+                    & {
+                        width: 60%;
+                    }
+                }
+
+                @media screen and (max-width: 560px) {
+                    & {
+                        width: 80%;
+                    }
+                }
+
+                @media screen and (max-width: 400px) {
+                    & {
+                        width: 95%;
+                    }
+                }
+            }
+
+            .textarea {
                 flex-direction: column;
                 align-items: flex-start;
 
-                div {
-                    margin: 10px 20px;
-                    display: flex;
-                    align-items: center;
-                    width: 40%;
-                    display: flex;
-                    justify-content: space-between;
-
-                    input {
-                        width: 70%;
-                        padding: 10px 20px;
-                        background-color: transparent;
-                        outline: none;
-                        border: 1px solid white;
-                        margin-left: 20px;
-                        @include module.border-radious;
-
-                    }
-
-                    textarea {
-                        width: 98%;
-                        outline: none;
-                        border: 1px solid white;
-                        padding: 10px;
-                    }
-
-                    input,
-                    textarea {
-                        cursor: auto;
-                        @include module.transition;
-                    }
-
-                    input:focus,
-                    textarea:focus {
-                        border: 1px solid black;
-                    }
-
-                    @media screen and (max-width: 870px) {
-                        & {
-                            width: 60%;
-                        }
-                    }
-
-                    @media screen and (max-width: 560px) {
-                        & {
-                            width: 80%;
-                        }
-                    }
-
-                    @media screen and (max-width: 400px) {
-                        & {
-                            width: 95%;
-                        }
-                    }
+                label {
+                    margin: 0px 0 20px 0;
                 }
+            }
 
-                .textarea {
-                    flex-direction: column;
-                    align-items: flex-start;
-
-                    label {
-                        margin: 0px 0 20px 0;
-                    }
-                }
-
-                input {
-                    margin: 10px 20px;
-                    padding: 8px 40px;
-                    outline: none;
-                    border: 1px solid white;
-                    background-color: white;
-                    letter-spacing: 1px;
-                    font-size: 15px;
-                    cursor: pointer;
-                    color: $primary_color;
-                    @include module.border-radious;
-                    @include module.transition;
+            input {
+                margin: 10px 20px;
+                padding: 8px 40px;
+                outline: none;
+                border: 1px solid white;
+                background-color: white;
+                letter-spacing: 1px;
+                font-size: 15px;
+                cursor: pointer;
+                color: $primary_color;
+                @include module.border-radious;
+                @include module.transition;
 
 
-                    &:hover {
-                        border: 1px solid black;
-                        color: black;
-                    }
+                &:hover {
+                    border: 1px solid black;
+                    color: black;
                 }
             }
         }
