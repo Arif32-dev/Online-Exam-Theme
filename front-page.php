@@ -85,6 +85,8 @@ class OE_front_page
                 'prev_text' => 'Prev',
                 'next_text' => 'Next',
                 'total' => $teacher->max_num_pages,
+                'mid_size' => 1,
+                'end_size' => 1,
             ]
         );
 

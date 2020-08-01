@@ -19,6 +19,7 @@ class OE_function
             'site_url' => site_url(),
             'authentication_page' => get_template_directory_uri() . '/public/includes/backend/authenticaton.php',
             'comment_file' => get_template_directory_uri() . '/public/includes/backend/comment.php',
+            'profile' => get_template_directory_uri() . '/public/includes/backend/profile.php',
         ]);
     }
     public function include_other_class()

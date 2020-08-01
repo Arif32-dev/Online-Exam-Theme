@@ -57,7 +57,9 @@ class Single_post
 
         ?>
         <ul class="comment-section">
+            <div class="comments_area">
                <?php $this->display_comments();?>
+            </div>
                 <li class="write-new">
                     <?php $this->comment_by_logged_in();?>
                 </li>
@@ -69,18 +71,14 @@ class Single_post
     {
         if (is_user_logged_in()) {
 
-            ?>
-                <form id="oe-comment-form" method="post">
-                        <input type="hidden" name="post_id" value="<?php echo get_the_ID() ?>">
-                        <textarea placeholder="Write your comment here" name="oe_comment"></textarea>
-                        <div>
-                            <img src="<?php echo get_avatar_url(1) ?>" width="45" alt="Profile of Bradley Jones" title="Bradley Jones" />
-                            <span><?php echo get_userdata(get_current_user_id())->data->display_name; ?></span>
-                            <button type="submit">Comment</button>
-                        </div>
-                 </form>
-            <?php
-
+            comment_form(
+                [
+                    'logged_in_as' => '',
+                    'class_submit' => 'oe_comment_submit',
+                    'title_reply' => 'Leave a Reply :',
+                ],
+                get_the_ID()
+            );
         } else {
 
             ?>
@@ -91,82 +89,11 @@ class Single_post
             <?php
 
         }
+
     }
     public function display_comments()
     {
-        $comments_query = new WP_Comment_Query([
-            'post_id' => get_the_ID(),
-        ]);
-        if (!$comments_query->comments) {
-            return;
-        }
-        foreach ($comments_query->comments as $comment) {
-            if (get_userdata($comment->user_id)) {
-
-                if (get_userdata($comment->user_id)->roles[0] == 'administrator') {
-                    ?>
-                <li class="comment author-comment">
-                        <div class="info">
-                            <a href=""><?php echo get_userdata($comment->user_id)->data->display_name; ?></a>
-                            <span>3 hours ago</span>
-                            <span><strong><?php echo get_userdata($comment->user_id)->roles[0]; ?></strong></span>
-                        </div>
-                        <div class="avatar">
-                            <img src="<?php echo get_template_directory_uri() . '/public/assets/img/avatar.png' ?>" width="45" alt="Profile Avatar" title="<?php echo get_userdata(1)->data->display_name; ?>" />
-                        </div>
-                        <p><?php echo $comment->comment_content; ?></p>
-                </li>
-                <?php
-
-                } else {
-
-                    ?>
-                    <li class="comment user-comment">
-                        <div class="info">
-                            <a href=""><?php echo get_userdata($comment->user_id)->data->display_name; ?></a>
-                            <span>4 hours ago</span>
-                            <span><strong><?php echo get_userdata($comment->user_id)->roles[0]; ?></strong></span>
-                        </div>
-                        <div class="avatar">
-                            <img src="<?php echo get_avatar_url($comment->user_id) ?>" width="45" alt="Profile Avatar" title="<?php echo get_userdata($comment->user_id)->data->display_name; ?>" />
-                        </div>
-                        <p><?php echo $comment->comment_content; ?></p>
-                </li>
-                <?php
-
-                }
-            } else {
-
-                ?>
-                    <li class="comment user-comment">
-                        <div class="info">
-                            <a href=""><?php echo $comment->comment_author; ?></a>
-                            <span>4 hours ago</span>
-                            <span><strong></strong></span>
-                        </div>
-                        <div class="avatar">
-                            <img src="<?php echo get_avatar_url($comment->user_id) ?>" width="45" alt="Profile Avatar" title="<?php echo $comment->comment_author; ?>" />
-                        </div>
-                        <p><?php echo $comment->comment_content; ?></p>
-                </li>
-                <?php
-
-            }
-        }
-    }
-    public function time_diff($time)
-    {
-        $comment_time = strtotime($time);
-        $time_diff = abs((time() - $comment_time));
-        if ($time_diff < 60) {
-            echo "" . $time_diff . " second ago";
-        }
-        if ($time_diff == 60) {
-            echo "a min ago";
-        }
-        if (intval(($time_diff / 60))) {
-            echo "" . intval(($time_diff / 60)) . " min ago";
-        }
+        comments_template();
     }
 }
 new Single_post();

@@ -75,6 +75,7 @@
 
     .view_post {
         @include module.btn($primary_color);
+        margin-top: 20px;
     }
 
     @media screen and (max-width: 560px) {

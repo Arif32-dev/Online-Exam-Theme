@@ -39,6 +39,8 @@ if (have_posts()) {
 echo paginate_links(array(
     'prev_text' => 'Prev',
     'next_text' => 'Next',
+    'mid_size' => 1,
+    'end_size' => 1,
 ));
 ?>
     </span>

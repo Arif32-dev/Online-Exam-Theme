@@ -1,20 +1,22 @@
 jQuery(document).ready(function($) {
     class Comment {
         constructor() {
-            this.comment_form = $('#oe-comment-form')
+            this.comment_sec = $('.comments_area');
             this.events();
         }
         events() {
-            this.comment_form.on('submit', this.handle_submit)
+            $(document).on('click', '#oe_load_more', this.load_more_comment.bind(this))
         }
-        handle_submit(e) {
-            let form_data = $(this).serialize();
+        load_more_comment(e) {
             $.ajax({
                 url: files.comment_file,
-                data: form_data,
+                data: {
+                    offset: $(e.currentTarget).attr('data-offset'),
+                    post_id: $(e.currentTarget).attr('data-post_id'),
+                },
                 method: 'post',
                 success: res => {
-                    console.log(res)
+                    this.comment_sec.html(res);
                 },
                 error: (err) => {
                     alert('Something went wrong');

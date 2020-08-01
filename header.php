@@ -1,4 +1,6 @@
-
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html class="no-js" lang="en">
 
@@ -18,6 +20,7 @@ function oe_user_login()
     if (is_user_logged_in()) {
 
         ?>
+            <a style="white-space: nowrap;" class="<?php active_link('Profile')?>" href="<?php echo esc_url(site_url('/profile')) ?>">Profile</a>
             <a class="<?php active_link('Login')?>" href="<?php echo esc_url(wp_logout_url(site_url('/login'))) ?>">Log Out</a>
         <?php
 
@@ -27,7 +30,8 @@ function oe_user_login()
             <a class="<?php active_link('Login')?>" href="<?php echo esc_url(site_url('/login')) ?>">Login</a>
             <a class="<?php active_link('Sign Up')?>" href="<?php echo esc_url(site_url('/sign-up')) ?>">Sign Up</a>
         <?php
-}
+
+    }
 }
 
 function active_link($link)

@@ -37,6 +37,16 @@
         &:hover {
             @include module.shadow;
         }
+
+        .load_more {
+            margin: 20px auto;
+            display: flex;
+            justify-content: center;
+
+            button {
+                @include module.btn($primary_color);
+            }
+        }
     }
 
     .comment {
@@ -165,10 +175,36 @@
 
 
     /* Comment form */
-
     .write-new {
-        margin: 80px auto 0;
-        width: 50%;
+        width: 100%;
+
+        #reply-title {
+            color: $primary_color;
+        }
+
+        .comment-form-comment {
+            label {
+                display: none;
+            }
+
+            textarea {
+                width: 60%;
+                border: 1px solid $primary_color;
+                padding: 15px;
+                outline: none;
+            }
+
+            textarea:focus {
+                border: 1px solid $primary_color;
+            }
+        }
+
+        .form-submit {
+            .oe_comment_submit {
+                @include module.btn($primary_color);
+                margin-top: 20px;
+            }
+        }
 
         .comment_txt {
             color: $primary_color;
@@ -180,37 +216,25 @@
                 color: black;
             }
         }
+
+        @media screen and (max-width: 750px) {
+            .comment-form-comment {
+                textarea {
+                    width: 70%;
+                }
+            }
+        }
+
+        @media screen and (max-width: 576px) {
+            .comment-form-comment {
+                textarea {
+                    width: 100%;
+                }
+            }
+        }
     }
 
-    .write-new textarea {
-        color: #444;
-        font: inherit;
-
-        outline: 0;
-        border-radius: 3px;
-        border: 1px solid $primary_color;
-        background-color: #fefefe;
-        box-shadow: 1px 2px 1px 0 rgba(0, 0, 0, 0.06);
-        overflow: auto;
-
-        width: 100%;
-        min-height: 80px;
-        padding: 15px 20px;
-    }
-
-    .write-new img {
-        border-radius: 50%;
-        margin-top: 15px;
-    }
-
-    .write-new button {
-        @include module.btn($primary_color);
-        float: right;
-
-        padding: 10px 25px;
-        margin-top: 18px;
-    }
-
+    /* end of comment form */
 
 
     /* Responsive styles */
@@ -271,10 +295,6 @@
             top: initial;
             left: 28px;
             bottom: -6px;
-        }
-
-        .write-new {
-            width: 100%;
         }
     }
 

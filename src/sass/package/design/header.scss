@@ -48,7 +48,7 @@ header {
             }
 
             nav {
-                width: 80%;
+                width: 70%;
 
                 a {
                     margin: 0 20px;
@@ -80,7 +80,7 @@ header {
         -ms-border-radius: 15px;
         -o-border-radius: 15px;
 
-        @media screen and (max-width: 850px) {
+        @media screen and (max-width: 860px) {
             .link {
                 display: none;
             }

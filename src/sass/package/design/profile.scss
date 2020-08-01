@@ -1,0 +1,186 @@
+@use '../common/module';
+
+.oe-profile {
+    width: 97%;
+    margin: 20px auto;
+
+    .profile_wrap {
+        width: 100%;
+        padding: 20px;
+        display: flex;
+        justify-content: space-between;
+        @include module.transition;
+        @include module.border-radious;
+        background-color: white;
+
+        &:hover {
+            @include module.shadow
+        }
+    }
+
+    .profile_img {
+        width: 30%;
+        min-width: 320px;
+        overflow: hidden;
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center center;
+        }
+
+        border-radius: 50%;
+        -webkit-border-radius: 50%;
+        -moz-border-radius: 50%;
+        -ms-border-radius: 50%;
+        -o-border-radius: 50%;
+    }
+
+    .user_info {
+        padding: 20px;
+        width: 70%;
+    }
+
+    form {
+        width: 100%;
+        padding-left: 50px;
+    }
+
+    .inp_wrap {
+        width: 70%;
+        height: 40px;
+        margin: 20px 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        label {
+            font-weight: bolder;
+            font-size: 15px;
+            white-space: nowrap;
+            color: $primary_color;
+            letter-spacing: 1px;
+            margin-right: 20px;
+        }
+
+        input {
+            width: 60%;
+            height: 90%;
+            outline: none;
+            border: 1px solid $primary_color;
+            padding: 0 15px;
+            @include module.border-radious;
+            background: #e6e6e6;
+        }
+
+        .select_box {
+            height: 90%;
+            position: relative;
+            width: 200px;
+
+            select {
+                cursor: pointer;
+                width: 100%;
+                height: 100%;
+                outline: none;
+                border: 1px solid $primary_color;
+                padding: 0 15px;
+                background: #e6e6e6;
+                @include module.border-radious;
+                -webkit-appearance: none;
+                -moz-appearance: none;
+                -ms-appearance: none;
+                -o-appearance: none;
+                appearance: none;
+
+                &:hover+span {
+                    color: $primary_color;
+                }
+            }
+
+        }
+
+        .symbol-input100 {
+            @include module.transition;
+            position: absolute;
+            right: 0;
+            margin-right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            -webkit-transform: translateY(-50%);
+            -moz-transform: translateY(-50%);
+            -ms-transform: translateY(-50%);
+            -o-transform: translateY(-50%);
+        }
+    }
+
+    button {
+        @include module.btn($primary_color);
+    }
+
+    @media screen and (max-width: 1020px) {
+        .inp_wrap {
+            input {
+                width: 100%;
+            }
+        }
+    }
+
+    @media screen and (max-width: 960px) {
+        .inp_wrap {
+            width: 100%;
+        }
+    }
+
+    @media screen and (max-width: 820px) {
+        .profile_wrap {
+            flex-direction: column;
+            align-items: center;
+        }
+
+        form {
+            padding: 0;
+        }
+    }
+
+    @media screen and (max-width: 700px) {
+        .profile_img {
+            img {
+                transform: scale(0.8);
+                -webkit-transform: scale(0.8);
+                -moz-transform: scale(0.8);
+                -ms-transform: scale(0.8);
+                -o-transform: scale(0.8);
+            }
+        }
+    }
+
+    @media screen and (max-width: 650px) {
+        .profile_img {
+            img {
+                transform: scale(0.7);
+                -webkit-transform: scale(0.7);
+                -moz-transform: scale(0.7);
+                -ms-transform: scale(0.7);
+                -o-transform: scale(0.7);
+            }
+        }
+
+        .user_info {
+            width: 100%;
+        }
+    }
+
+    @media screen and (max-width: 500px) {
+        .inp_wrap {
+            flex-direction: column;
+            align-items: flex-start;
+            height: 70px;
+
+            label {
+                margin-bottom: 10px;
+            }
+        }
+    }
+}

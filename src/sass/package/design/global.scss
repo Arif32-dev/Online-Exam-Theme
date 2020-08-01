@@ -45,15 +45,18 @@
 }
 
 .pagination_wrap {
+    display: flex;
+    justify-content: space-around;
 
     a,
     span {
+        text-align: center;
         padding: 10px 20px;
         text-decoration: none;
         border: 1px solid $primary_color;
         color: $primary_color;
         font-weight: bolder;
-
+        margin: 0 3px;
         @include module.transition;
 
         &:hover {
@@ -65,5 +68,19 @@
     .current {
         background-color: $primary_color;
         color: white;
+    }
+
+}
+
+@media screen and (max-width: 620px) {
+    .pagination_wrap {
+        flex-direction: column;
+
+        a,
+        span {
+            margin: 3px auto;
+            padding: 10px 30px;
+
+        }
     }
 }
