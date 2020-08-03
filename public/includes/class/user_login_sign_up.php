@@ -24,7 +24,7 @@ class User_auth
     }
     public function redirectSub()
     {
-        if (get_userdata(get_current_user_id())->roles[0] == 'subscriber') {
+        if (get_userdata(get_current_user_id())->roles[0] == 'subscriber' || get_userdata(get_current_user_id())->roles[0] == 'student') {
             wp_redirect(site_url('/'));
             exit;
         }

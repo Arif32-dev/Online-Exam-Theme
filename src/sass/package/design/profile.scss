@@ -25,7 +25,7 @@
 
         img {
             width: 100%;
-            height: 100%;
+            height: 85%;
             object-fit: cover;
             object-position: center center;
         }
@@ -40,6 +40,17 @@
     .user_info {
         padding: 20px;
         width: 70%;
+    }
+
+    .warning_text {
+        text-align: center;
+        color: red;
+        white-space: nowrap;
+        display: none;
+    }
+
+    .success_text {
+        color: $primary_color;
     }
 
     form {
@@ -93,25 +104,7 @@
                 -ms-appearance: none;
                 -o-appearance: none;
                 appearance: none;
-
-                &:hover+span {
-                    color: $primary_color;
-                }
             }
-
-        }
-
-        .symbol-input100 {
-            @include module.transition;
-            position: absolute;
-            right: 0;
-            margin-right: 10px;
-            top: 50%;
-            transform: translateY(-50%);
-            -webkit-transform: translateY(-50%);
-            -moz-transform: translateY(-50%);
-            -ms-transform: translateY(-50%);
-            -o-transform: translateY(-50%);
         }
     }
 

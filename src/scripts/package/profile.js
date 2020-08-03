@@ -1,38 +1,31 @@
 jQuery(document).ready(function($) {
     class Profile {
         constructor() {
-            this.contact_us = $('#oe-contact-us-form');
+            this.user_form = $('#oe_user_profile');
             this.events();
         }
         events() {
-            this.contact_us.on('submit', this.handle_submit)
+            this.user_form.on('submit', this.handle_submit)
         }
         handle_submit(e) {
             e.preventDefault();
             let form_data = $(this).serialize();
             $.ajax({
-                url: files.authentication_page,
+                url: files.profile,
                 data: form_data,
                 method: 'post',
                 success: res => {
-                    console.log(res)
-                    if (res == 'contact_us_success') {
-                        $(this).find('.input').val('')
-                        $('.sent-msg').hide().slideDown().html('Sent Messege Successfully');
-                        $('.reg-btn').attr('disabled', false);
+                    if (res == 'success') {
+                        $('.warning_text').addClass('success_text');
+                        $('.warning_text').html('Updated Successfully').hide().slideDown();
                     } else {
-                        $('.sent-msg').addClass('error-msg');
-                        $('.sent-msg').hide().slideDown().html(res);
-                        $('.reg-btn').attr('disabled', false);
+                        $('.warning_text').html(res).hide().slideDown();
                     }
                 },
                 error: err => {
-                    $('.sent-msg').addClass('error-msg');
-                    $('.sent-msg').hide().slideDown().html("Something went wrong");
-                    $('.reg-btn').attr('disabled', false);
+                    alert('Something went wrong')
                 }
             })
-            $('.reg-btn').attr('disabled', true);
         }
     }
     new Profile();

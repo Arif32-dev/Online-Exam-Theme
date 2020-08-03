@@ -6,6 +6,7 @@
         </div>
         <div class="user_info">
             <form action="" id="oe_user_profile" method="post">
+                <div class="warning_text"></div>
                 <input type="hidden" name="user_id" value="<?php echo get_current_user_id(); ?>">
                 <div class="inp_wrap">
                     <label for="name">Name :</label>
@@ -16,10 +17,14 @@
                     <input type="text" disabled name="user_email" value="<?php echo esc_attr(get_userdata(get_current_user_id())->data->user_email); ?>">
                 </div>
                     <?php get_userdata(get_current_user_id())->roles[0] == 'administrator' ? "" : select_box()?>
-                <div class="inp_wrap">
+                <div id="old_pass" class="inp_wrap">
                     <label for="name">New Password :</label>
-                    <input type="password" name="user_pass">
+                    <input type="password" required name="user_pass">
                 </div>
+                <div id="con_pass" class="inp_wrap">
+                    <label for="name">Confirm Password :</label>
+                    <input type="password" required name="con_pass">
+                 </div>
                 <button type="sumbit">Update Profle</button>
             </form>
         </div>
@@ -36,9 +41,6 @@ function select_box()
                     <select name="dept" form="oe_user_profile" >
                         <?php get_department();?>
                     </select>
-                    <span class="symbol-input100">
-                            <i class="fas fa-arrow-circle-down"></i>
-                    </span>
                 </div>
         </div>
     <?php
@@ -47,54 +49,50 @@ function select_box()
 function get_department()
 {
     global $wpdb;
-    $table = $wpdb->prefix . 'department';
-    $dept_data = $wpdb->get_results("SELECT * FROM " . $table . "");
-    if ($dept_data) {
-        if (get_userdata(get_current_user_id())->roles[0] == 'teacher') {
-            $teacher_table = $wpdb->prefix . 'teacher';
-            $teacher_data = $wpdb->get_results("SELECT * FROM " . $teacher_table . " WHERE teacher_id=" . get_current_user_id() . "");
-            foreach ($dept_data as $dept) {
-                if ($teacher_data) {
+    if (get_userdata(get_current_user_id())->roles[0] == 'teacher') {
+        $teacher_table = $wpdb->prefix . 'teacher';
+        $teacher_data = $wpdb->get_results("SELECT * FROM " . $teacher_table . " WHERE teacher_id=" . get_current_user_id() . "");
+        if ($teacher_data) {
+            $table = $wpdb->prefix . 'department';
+            $dept_data = $wpdb->get_results("SELECT * FROM " . $table . " WHERE dept_id=" . $teacher_data[0]->teacher_dept . "");
 
-                    ?>
-                        <option value="<?php echo $dept->dept_id ?>" <?php echo $dept->dept_id == $teacher_data[0]->teacher_dept ? "selected" : "" ?>><?php echo $dept->dept_name ?></option>
-                    <?php
+            if ($dept_data) {
 
-                } else {
+                ?>
+                    <option disabled value="" <?php echo $dept_data[0]->dept_id == $teacher_data[0]->teacher_dept ? "selected" : "" ?>><?php echo $dept_data[0]->dept_name ?></option>
+                <?php
 
-                    ?>
-                        <option selected disabled>Select a department</option>
-                        <option value="<?php echo $dept->dept_id ?>"><?php echo $dept->dept_name ?></option>
-                    <?php
+            } else {
 
-                }
+                ?>
+                    <option value="" selected disabled>No Department</option>
+                <?php
+
             }
+
         }
-        if (get_userdata(get_current_user_id())->roles[0] == 'subscriber') {
-            $std_table = $wpdb->prefix . 'students';
-            $std_data = $wpdb->get_results("SELECT * FROM " . $std_table . " WHERE teacher_id=" . get_current_user_id() . "");
-            foreach ($dept_data as $dept) {
-                if ($std_data) {
+    }
+    if (get_userdata(get_current_user_id())->roles[0] == 'subscriber') {
+        $std_table = $wpdb->prefix . 'students';
+        $std_data = $wpdb->get_results("SELECT * FROM " . $std_table . " WHERE teacher_id=" . get_current_user_id() . "");
+        if ($std_data) {
+            $table = $wpdb->prefix . 'department';
+            $dept_data = $wpdb->get_results("SELECT * FROM " . $table . " WHERE dept_id=" . $std_data[0]->dept_id . "");
+            if ($dept_data) {
 
-                    ?>
-                        <option value="<?php echo $dept->dept_id ?>" <?php echo $dept->dept_id == $std_data[0]->dept_id ? "selected" : "" ?>><?php echo $dept->dept_name ?></option>
-                    <?php
+                ?>
+                        <option disabled value="" <?php echo $dept_data[0]->dept_id == $std_data[0]->dept_id ? "selected" : "" ?>><?php echo $dept_data[0]->dept_name ?></option>
+                <?php
 
-                } else {
+            } else {
 
-                    ?>
-                        <option selected disabled>Select a department</option>
-                        <option value="<?php echo $dept->dept_id ?>"><?php echo $dept->dept_name ?></option>
-                    <?php
+                ?>
+                    <option value="" selected disabled>No Department</option>
+                <?php
 
-                }
             }
-        }
-    } else {
 
-        ?>
-             <option  seleted>No Department</option>
-        <?php
+        }
 
     }
 }

@@ -13,9 +13,12 @@ class OE_commnet
     {
 
         if ($this->data['offset']) {
-            $_SESSION['comments'] = 'hello';
             $comments_query = new WP_Comment_Query();
             $comments_per_page = $this->data['offset'];
+            $_SESSION['offset_data'] = [
+                'comments_per_page' => ($comments_per_page + $comments_per_page),
+                'post_id' => $this->data['post_id'],
+            ];
 
             $comments = $comments_query->query([
                 'status' => 'approve',

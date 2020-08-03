@@ -26,7 +26,7 @@ class OE_verification extends Base_mail
                         'user_email' => $res[0]->std_email,
                         'display_name' => $res[0]->std_name,
                         'show_admin_bar_front' => 'false',
-                        'role' => 'subscriber',
+                        'role' => 'student',
                     ]
                 );
                 if (is_int($user_id)) {

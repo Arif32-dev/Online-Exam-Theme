@@ -1,13 +1,13 @@
 <?php
 
 $comments_query = new WP_Comment_Query();
-$comments_per_page = 4;
+$comments_per_page = 1;
+$number = isset($_SESSION['offset_data']) ? $_SESSION['offset_data']['post_id'] == get_the_ID() ? $_SESSION['offset_data']['comments_per_page'] : $comments_per_page : $comments_per_page;
 $comments = $comments_query->query([
     'status' => 'approve',
     'post_id' => get_the_ID(),
-    'number' => $comments_per_page,
+    'number' => $number,
 ]);
-
 date_default_timezone_set(wp_timezone_string());
 if ($comments) {
     ?>
@@ -73,11 +73,12 @@ if ($comments) {
 function load_more($comments_per_page)
 {
     $comments_query = new WP_Comment_Query();
+    $number = isset($_SESSION['offset_data']) ? $_SESSION['offset_data']['post_id'] == get_the_ID() ? $_SESSION['offset_data']['comments_per_page'] : $comments_per_page : $comments_per_page;
 
     $next_comment = $comments_query->query([
         'status' => 'approve',
-        'offset' => $comments_per_page,
-        'number' => $comments_per_page,
+        'offset' => $number,
+        'number' => $number,
         'post_id' => get_the_ID(),
     ]);
     if ($next_comment) {
