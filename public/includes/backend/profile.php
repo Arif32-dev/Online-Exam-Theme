@@ -24,7 +24,19 @@ class OE_profile
                 'user_pass' => sanitize_text_field($this->data['user_pass']),
             ]);
             if ($res) {
-                $this->update_teacher();
+                if (get_current_user_id() == $this->data['user_id']) {
+                    if (get_userdata($this->data['user_id'])->roles[0] == 'administrator') {
+                        echo 'success';
+                    }
+                    if (get_userdata($this->data['user_id'])->roles[0] == 'teacher') {
+                        echo 'success';
+                        $this->update_oe_teacher();
+                    }
+                    if (get_userdata($this->data['user_id'])->roles[0] == 'student') {
+                        echo 'success';
+                        $this->update_oe_students();
+                    }
+                }
             } else {
                 echo 'Something went wrong';
             }
@@ -32,7 +44,7 @@ class OE_profile
             echo "Password didn't matched";
         }
     }
-    public function update_teacher()
+    public function update_oe_teacher()
     {
         global $wpdb;
         $table = $wpdb->prefix . 'teacher';
@@ -42,7 +54,7 @@ class OE_profile
                 'teacher_name' => sanitize_text_field($this->data['user_name']),
             ],
             [
-                'teacher_id' => get_current_user_id(),
+                'teacher_id' => $this->data['user_id'],
             ],
             [
                 '%s',
@@ -51,15 +63,27 @@ class OE_profile
                 '%d',
             ]
         );
-        $this->output($res);
     }
-    public function output($res)
+
+    public function update_oe_students()
     {
-        if ($res) {
-            echo 'success';
-        } else {
-            echo "Something went wrong";
-        }
+        global $wpdb;
+        $table = $wpdb->prefix . 'students';
+        $res = $wpdb->update(
+            $table,
+            [
+                'std_name' => sanitize_text_field($this->data['user_name']),
+            ],
+            [
+                'std_id' => $this->data['user_id'],
+            ],
+            [
+                '%s',
+            ],
+            [
+                '%d',
+            ]
+        );
     }
 }
 new OE_profile();

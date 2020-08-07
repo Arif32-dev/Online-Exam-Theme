@@ -1,4 +1,9 @@
-<?php get_header('header.php')?>
+<?php
+if (!is_user_logged_in() && get_userdata(get_current_user_id())->roles[0] == 'subscriber') {
+    wp_redirect(site_url('/'));
+    exit;
+}
+get_header('header.php')?>
 <section class="oe-profile">
     <div class="profile_wrap">
         <div class="profile_img">
@@ -72,9 +77,9 @@ function get_department()
 
         }
     }
-    if (get_userdata(get_current_user_id())->roles[0] == 'subscriber') {
+    if (get_userdata(get_current_user_id())->roles[0] == 'student') {
         $std_table = $wpdb->prefix . 'students';
-        $std_data = $wpdb->get_results("SELECT * FROM " . $std_table . " WHERE teacher_id=" . get_current_user_id() . "");
+        $std_data = $wpdb->get_results("SELECT * FROM " . $std_table . " WHERE std_id=" . get_current_user_id() . "");
         if ($std_data) {
             $table = $wpdb->prefix . 'department';
             $dept_data = $wpdb->get_results("SELECT * FROM " . $table . " WHERE dept_id=" . $std_data[0]->dept_id . "");

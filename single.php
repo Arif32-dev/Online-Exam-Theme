@@ -70,15 +70,17 @@ class Single_post
     public function comment_by_logged_in()
     {
         if (is_user_logged_in()) {
+            if (comments_open()) {
 
-            comment_form(
-                [
-                    'logged_in_as' => '',
-                    'class_submit' => 'oe_comment_submit',
-                    'title_reply' => 'Leave a Reply :',
-                ],
-                get_the_ID()
-            );
+                comment_form(
+                    [
+                        'logged_in_as' => '',
+                        'class_submit' => 'oe_comment_submit',
+                        'title_reply' => 'Leave a Reply :',
+                    ],
+                    get_the_ID()
+                );
+            }
         } else {
 
             ?>

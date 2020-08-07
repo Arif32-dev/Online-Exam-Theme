@@ -12,12 +12,25 @@
 
 <body <?php body_class()?>>
 <?php
+function is_user_is_oe_user()
+{
+    if (get_userdata(get_current_user_id())->roles[0] != 'subscriber') {
+
+        ?>
+            <a style="white-space: nowrap;" class="<?php active_link("Profile")?>" href="<?php echo site_url('/profile') ?>">Profile</a>
+        <?php
+
+    } else {
+        echo "";
+    }
+}
 function oe_user_login()
 {
     if (is_user_logged_in()) {
 
+        is_user_is_oe_user();
+
         ?>
-            <a style="white-space: nowrap;" class="<?php active_link('Profile')?>" href="<?php echo esc_url(site_url('/profile')) ?>">Profile</a>
             <a class="<?php active_link('Login')?>" href="<?php echo esc_url(wp_logout_url(site_url('/login'))) ?>">Log Out</a>
         <?php
 
