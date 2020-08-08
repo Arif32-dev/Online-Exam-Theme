@@ -8,7 +8,13 @@
         width: 100%;
         display: grid;
         grid-gap: 20px;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+
+        @media screen and (max-width: 560px) {
+            & {
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            }
+        }
     }
 
     .qus_card {
@@ -149,5 +155,79 @@
 
         @include module.border-radious;
 
+    }
+}
+
+.oe_timer {
+    width: 98%;
+    position: relative;
+    margin: 20px auto;
+    margin-bottom: 40px;
+
+    .time_wrap {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+    }
+
+    .exam_details {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin-right: auto;
+        height: 100%;
+        align-items: flex-start;
+        margin-left: 20px;
+        padding: 10px 20px;
+        background-color: white;
+        @include module.transition;
+        border-radius: 5px;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        -ms-border-radius: 5px;
+        -o-border-radius: 5px;
+
+        &:hover {
+            @include module.shadow;
+        }
+    }
+
+    span {
+        z-index: 4;
+        white-space: nowrap;
+        margin-right: 10px;
+        font-weight: bolder;
+        font-size: 20px;
+        color: $primary_color;
+        background-color: white;
+        padding: 10px 20px;
+        @include module.shadow;
+        border-radius: 5px;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        -ms-border-radius: 5px;
+        -o-border-radius: 5px;
+    }
+
+    .fixed {
+        position: fixed;
+        top: 10px;
+    }
+
+    @media screen and (max-width: 540px) {
+        .time_wrap {
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        span {
+            margin-right: 0;
+        }
+
+        .exam_details {
+            margin: 20px 0;
+        }
     }
 }

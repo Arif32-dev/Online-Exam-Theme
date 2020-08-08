@@ -65,7 +65,7 @@ function active_link($link)
                     <nav>
                         <a class="<?php active_link('Home')?>" href="<?php echo site_url('/home') ?>">Home</a>
                         <a class="<?php active_link('Blog')?>"  href="<?php echo site_url('/blog') ?>">Blog</a>
-                        <a class="<?php active_link('Department')?>" href="<?php echo site_url('/department') ?>">Department</a>
+                        <a class="<?php active_link('Department')?>" href="<?php echo site_url('/department') ?>">Department Exam</a>
                     </nav>
                     <div class="user-cred">
                         <?php oe_user_login()?>
@@ -80,7 +80,7 @@ function active_link($link)
 
                         <a class="<?php active_link('Home')?>" href="<?php echo site_url('/home') ?>">Home</a>
                         <a class="<?php active_link('Blog')?>" href="<?php echo site_url('/blog') ?>">Blog</a>
-                        <a class="<?php active_link('Department')?>" href="<?php echo site_url('/department') ?>">Department</a>
+                        <a class="<?php active_link('Department')?>" href="<?php echo site_url('/department') ?>">Department Exam</a>
                         <?php oe_user_login()?>
                 </div>
             </div>

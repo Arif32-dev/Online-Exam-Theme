@@ -1,93 +1,134 @@
-<?php get_header('header.php')?>
-<div class="qus-container">
-    <div class="qus_wrap">
-        <div class="qus_card">
-            <div class="qustion">
-                <p>
-                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus, blanditiis? Ipsa assumenda, ipsam eum quos iste nesciunt porro qui saepe numquam debitis quasi dignissimos autem! Autem ab quidem ullam dolorem.
-                </p>
-            </div>
-            <form class="oe_mcq">
-                <div class="ans">
-                    <div class="ans_box">
-                        <input type="radio" name="ans" >
-                        <p>Name of heaves and collinded</p>
-                    </div>
-                    <div class="ans_box">
-                        <input type="radio" name="ans" >
-                        <p>Name of heaves</p>
-                    </div>
-                    <div class="ans_box">
-                        <input type="radio" name="ans" >
-                        <p>Name of heaves and collinded asdf</p>
-                    </div>
-                    <div class="ans_box">
-                        <input type="radio" name="ans" >
-                        <p>Name of heaves </p>
-                    </div>
-                </div>
-                <input type="submit" name="sumbit_ans" value="Answer" >
-            </form>
-        </div>
-        <div class="qus_card">
-            <div class="qustion">
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus, blanditiis? Ipsa assumenda, ipsam eum quos iste nesciunt porro qui saepe numquam debitis quasi dignissimos autem! Autem ab quidem ullam dolorem.
-                </p>
-            </div>
-            <form class="oe_mcq">
-                <div class="ans">
-                    <div class="ans_box">
-                        <input type="radio" name="ans" >
-                        <p>Name of heaves and collinded</p>
-                    </div>
-                    <div class="ans_box">
-                        <input type="radio" name="ans" >
-                        <p>Name of heaves</p>
-                    </div>
-                    <div class="ans_box">
-                        <input type="radio" name="ans" >
-                        <p>Name of heaves and collinded asdf</p>
-                    </div>
-                    <div class="ans_box">
-                        <input type="radio" name="ans" >
-                        <p>Name of heaves </p>
+<?php get_header('header.php');
+class OE_department_exam
+{
+    public function __construct()
+    {
+        if (get_userdata(get_current_user_id())->roles[0] == 'student') {
+            $this->fetch_qustion();
+        } else {
+            $text = "Sorry . But you are not a student to perform an exam";
+            $btn = "Back to Home";
+            $url = site_url('/');
+            $this->notify_msg($text, $btn, $url);
+        }
+    }
+    public function fetch_qustion()
+    {
+        global $wpdb;
+        $table = $wpdb->prefix . 'students';
+        $res = $wpdb->get_results("SELECT * FROM " . $table . " WHERE std_id=" . get_current_user_id() . "");
+        if ($res) {
+            $table = $wpdb->prefix . 'question_folder';
+            $exam_folder_data = $wpdb->get_results("SELECT * FROM " . $table . " WHERE dept_id=" . $res[0]->dept_id . " AND publish_exam=1");
+            if ($exam_folder_data) {
+                $table = $wpdb->prefix . 'qustions';
+                $qustion_data = $wpdb->get_results("SELECT * FROM " . $table . " WHERE exam_folder_id=" . $exam_folder_data[0]->exam_folder_id . "");
+                if ($qustion_data) {
+                    $this->exam_timer($exam_folder_data);
+                    $this->exam_qustions($qustion_data);
+                }
+            } else {
+                $text = "No exam is scheduled yet";
+                $btn = "Previous Exam's";
+                $url = site_url('/previous-result');
+                $this->notify_msg($text, $btn, $url);
+            }
+        }
+    }
+    public function exam_qustions($qustion_data)
+    {
+
+        ?>
+                <div class="qus-container">
+                    <div class="qus_wrap">
+                        <?php $this->qustion_cards($qustion_data)?>
                     </div>
                 </div>
-                <input type="submit" name="sumbit_ans" value="Answer" >
-            </form>
-        </div>
-        <div class="qus_card">
-            <div class="qustion">
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus, blanditiis? Ipsa assumenda, ipsam eum quos iste nesciunt porro qui saepe numquam debitis quasi dignissimos autem! Autem ab quidem ullam dolorem.
-                </p>
-            </div>
-            <form class="oe_mcq">
-                <div class="ans">
-                    <div class="ans_box">
-                        <input type="radio" name="ans" >
-                        <p>Name of heaves and collinded</p>
+                <section class="result-sec">
+                    <a href="<?php echo site_url('/exam-result') ?>">View Result</a>
+                </section>
+        <?php
+
+    }
+    public function qustion_cards($qustion_data)
+    {
+        foreach ($qustion_data as $qustion) {
+
+            ?>
+                 <div class="qus_card">
+                            <div class="qustion">
+                                <p>
+                                    <?php echo sanitize_text_field(trim($qustion->qustion)) ?>
+                                </p>
+                            </div>
+                            <form class="oe_mcq">
+                                <input type="hidden" name="qustion_id" value="<?php echo sanitize_text_field(trim($qustion->qustion_id)) ?>">
+                                <div class="ans">
+                                    <div class="ans_box">
+                                        <input type="radio" name="ans" value="<?php echo sanitize_text_field(trim($qustion->a1_id)) ?>">
+                                        <p><?php echo sanitize_text_field(trim($qustion->a1)) ?></p>
+                                    </div>
+                                    <div class="ans_box">
+                                        <input type="radio" name="ans" value="<?php echo sanitize_text_field(trim($qustion->a2_id)) ?>">
+                                        <p><?php echo sanitize_text_field(trim($qustion->a2)) ?></p>
+                                    </div>
+                                    <div class="ans_box">
+                                        <input type="radio" name="ans" value="<?php echo sanitize_text_field(trim($qustion->a3_id)) ?>">
+                                        <p><?php echo sanitize_text_field(trim($qustion->a3)) ?></p>
+                                    </div>
+                                    <div class="ans_box">
+                                        <input type="radio" name="ans" value="<?php echo sanitize_text_field(trim($qustion->a4_id)) ?>">
+                                        <p><?php echo sanitize_text_field(trim($qustion->a4)) ?></p>
+                                    </div>
+                                </div>
+                                <input type="submit" name="sumbit_ans" value="Answer">
+                            </form>
+                 </div>
+            <?php
+
+        }
+    }
+    public function exam_timer($exam_folder_data)
+    {
+        ?>
+            <section class="oe_timer">
+                <div class="time_wrap">
+                    <div class="exam_details">
+                        <h3>Department : <?php $this->get_department($exam_folder_data)?></h3>
+                        <h3>Exam Name : <?php echo trim($exam_folder_data[0]->exam_folder_name) ?></h3>
                     </div>
-                    <div class="ans_box">
-                        <input type="radio" name="ans" >
-                        <p>Name of heaves</p>
-                    </div>
-                    <div class="ans_box">
-                        <input type="radio" name="ans" >
-                        <p>Name of heaves and collinded asdf</p>
-                    </div>
-                    <div class="ans_box">
-                        <input type="radio" name="ans" >
-                        <p>Name of heaves </p>
-                    </div>
+                    <span id="oe_timer"></span>
                 </div>
-                <input type="submit" name="sumbit_ans" value="Answer" >
-            </form>
-        </div>
-    </div>
-</div>
-<section class="result-sec">
-<a href="<?php echo site_url('/exam-result') ?>">View Result</a>
-</section>
-<?php get_footer('footer.php')?>
+            </section>
+        <?php
+
+    }
+    public function get_department($exam_folder_data)
+    {
+        global $wpdb;
+        $table = $wpdb->prefix . 'department';
+        $res = $wpdb->get_results("SELECT * FROM " . $table . " WHERE dept_id=" . $exam_folder_data[0]->dept_id . "");
+        if ($res) {
+            echo $res[0]->dept_name;
+        }
+    }
+    public function notify_msg($text, $btn, $url)
+    {
+
+        ?>
+            <section class="oe-verifcation">
+                <div class="veri_container">
+                    <div class="ver_msg">
+                        <p><?php echo $text ?></p>
+                    </div>
+                    <a href="<?php echo $url ?>"><?php echo $btn ?></a>
+                </div>
+            </section>
+        <?php
+
+    }
+}
+new OE_department_exam();
+
+get_footer('footer.php')
+?>

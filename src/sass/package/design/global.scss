@@ -84,3 +84,47 @@
         }
     }
 }
+
+.oe-verifcation {
+    width: 96%;
+    margin: 20px auto;
+
+    .veri_container {
+        width: 100%;
+        padding: 20px;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        @include module.transition;
+        @include module.border-radious;
+
+        &:hover {
+            @include module.shadow;
+        }
+    }
+
+    .ver_msg,
+    .ver_error {
+        background-color: white;
+        padding: 20px 30px;
+        border: 2px solid $primary_color;
+        @include module.transition;
+        @include module.border-radious;
+
+        &:hover {
+            @include module.shadow;
+        }
+
+    }
+
+    .ver_error {
+        border: 2px solid red;
+    }
+
+    a {
+        @include module.btn($primary_color);
+        align-self: center;
+        margin-top: 20px;
+
+    }
+}
