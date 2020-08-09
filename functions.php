@@ -20,6 +20,8 @@ class OE_function
             'authentication_page' => get_template_directory_uri() . '/public/includes/backend/authenticaton.php',
             'comment_file' => get_template_directory_uri() . '/public/includes/backend/comment.php',
             'profile' => get_template_directory_uri() . '/public/includes/backend/profile.php',
+            'answer' => get_template_directory_uri() . '/public/includes/backend/answer.php',
+            'exam_result' => site_url('/exam-result'),
         ]);
     }
     public function include_other_class()

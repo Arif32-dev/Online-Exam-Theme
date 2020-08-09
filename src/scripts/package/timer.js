@@ -24,31 +24,39 @@ jQuery(document).ready(function($) {
             }
         }
         timer() {
-            var countDownDate = new Date("Aug 9, 2020 15:37:25").getTime();
-
+            var date_string = $('#oe_timer').attr('data-remaining_time');
+            var countDownDate = new Date(date_string).getTime();
             // Update the count down every 1 second
-            var x = setInterval(function() {
-
-                // Get today's date and time
+            var qus_timer = setInterval(function() {
                 var now = new Date().getTime();
-
-                // Find the distance between now and the count down date
                 var distance = countDownDate - now;
-
-                // Time calculations for days, hours, minutes and seconds
                 var days = Math.floor(distance / (1000 * 60 * 60 * 24));
                 var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-                // Output the result in an element with id="demo"
-                document.getElementById("oe_timer").innerHTML = days + "d " + hours + "h " +
-                    minutes + "m " + seconds + "s ";
-
-                // If the count down is over, write some text 
+                var min = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                var sec = Math.floor((distance % (1000 * 60)) / 1000);
+                var print_day = " " + days + "day";
+                var print_hour = " " + hours + "hour";
+                var print_min = " " + min + "min";
+                var print_sec = "" + sec + "s";
+                $('#oe_timer').html(`
+                    ${days != 0 ? print_day : ""} ${hours != 0 ? print_hour : ""} ${min != 0 ? print_min : ''} ${print_sec}
+                `)
+                if (min < 3 && hours < 1) {
+                    $('#oe_timer').addClass('timer_warning');
+                } else {
+                    $('#oe_timer').removeClass('timer_warning');
+                }
+                /* if time is over then show time off msg and clear all qustion */
                 if (distance < 0) {
-                    clearInterval(x);
-                    document.getElementById("oe_timer").innerHTML = "EXPIRED";
+                    clearInterval(qus_timer);
+                    $('.qus_card').slideUp();
+                    document.getElementById("oe_timer").innerHTML = "Time Off";
+                    let view_result = `
+                    <section class="result-sec">
+                            <a href="${files.exam_result}">View Result</a>
+                    </section>
+                    `;
+                    $(view_result).insertAfter('.qus-container');
                 }
             }, 1000);
         }

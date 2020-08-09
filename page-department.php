@@ -22,10 +22,18 @@ class OE_department_exam
             $exam_folder_data = $wpdb->get_results("SELECT * FROM " . $table . " WHERE dept_id=" . $res[0]->dept_id . " AND publish_exam=1");
             if ($exam_folder_data) {
                 $table = $wpdb->prefix . 'qustions';
-                $qustion_data = $wpdb->get_results("SELECT * FROM " . $table . " WHERE exam_folder_id=" . $exam_folder_data[0]->exam_folder_id . "");
+                $qustion_data = $wpdb->get_results("SELECT * FROM " . $table . " WHERE exam_folder_id=" . $exam_folder_data[0]->exam_folder_id . " AND status=1");
                 if ($qustion_data) {
                     $this->exam_timer($exam_folder_data);
                     $this->exam_qustions($qustion_data);
+                } else {
+
+                    ?>
+                        <section class="result-sec">
+                            <a href="<?php echo site_url('/exam-result') ?>">View Result</a>
+                        </section>
+                    <?php
+
                 }
             } else {
                 $text = "No exam is scheduled yet";
@@ -44,9 +52,6 @@ class OE_department_exam
                         <?php $this->qustion_cards($qustion_data)?>
                     </div>
                 </div>
-                <section class="result-sec">
-                    <a href="<?php echo site_url('/exam-result') ?>">View Result</a>
-                </section>
         <?php
 
     }
@@ -62,6 +67,7 @@ class OE_department_exam
                                 </p>
                             </div>
                             <form class="oe_mcq">
+                                <input type="hidden" name="exam_folder_id" value="<?php echo $qustion->exam_folder_id ?>">
                                 <input type="hidden" name="qustion_id" value="<?php echo sanitize_text_field(trim($qustion->qustion_id)) ?>">
                                 <div class="ans">
                                     <div class="ans_box">
@@ -90,14 +96,17 @@ class OE_department_exam
     }
     public function exam_timer($exam_folder_data)
     {
+        date_default_timezone_set(wp_timezone_string());
+
         ?>
             <section class="oe_timer">
                 <div class="time_wrap">
                     <div class="exam_details">
                         <h3>Department : <?php $this->get_department($exam_folder_data)?></h3>
                         <h3>Exam Name : <?php echo trim($exam_folder_data[0]->exam_folder_name) ?></h3>
+                        <h3>Total Mark : <?php echo trim($exam_folder_data[0]->total_mark) ?></h3>
                     </div>
-                    <span id="oe_timer"></span>
+                    <span data-remaining_time="<?php echo date("M d, Y H:i:s", $exam_folder_data[0]->remaining_time) ?>" id="oe_timer"></span>
                 </div>
             </section>
         <?php
