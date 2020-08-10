@@ -20,6 +20,7 @@ jQuery(document).ready(function($) {
                         alert('Something went wrong');
                     }
                     if (res == 'success') {
+                        $(e.currentTarget).removeClass('oe_mcq');
                         $(e.currentTarget).parent().slideUp().hide();
                     }
                 },

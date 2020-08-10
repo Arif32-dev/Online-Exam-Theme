@@ -51,6 +51,32 @@ jQuery(document).ready(function($) {
                     clearInterval(qus_timer);
                     $('.qus_card').slideUp();
                     document.getElementById("oe_timer").innerHTML = "Time Off";
+
+                    /* sending rest of the answer to database */
+                    let final_data = [];
+                    let data = $('.oe_mcq').serializeArray();
+                    /* breaking the array into chunk if array will consists of 2 elements key and value */
+                    if (data.length) {
+                        while (data.length > 0) {
+                            chunk = data.splice(0, 2)
+                            final_data.push(chunk)
+                        }
+                        console.log(final_data);
+                        $.ajax({
+                            type: "post",
+                            url: files.bulk_answer,
+                            data: {
+                                final_data
+                            },
+                            success: function(res) {
+                                console.log(res)
+                            },
+                            error: err => {
+                                alert("Something went wrong");
+                            }
+                        });
+                    }
+
                     let view_result = `
                     <section class="result-sec">
                             <a href="${files.exam_result}">View Result</a>

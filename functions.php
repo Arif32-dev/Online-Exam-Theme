@@ -22,6 +22,7 @@ class OE_function
             'profile' => get_template_directory_uri() . '/public/includes/backend/profile.php',
             'answer' => get_template_directory_uri() . '/public/includes/backend/answer.php',
             'exam_result' => site_url('/exam-result'),
+            'bulk_answer' => get_template_directory_uri() . '/public/includes/backend/bulk_answer.php',
         ]);
     }
     public function include_other_class()

@@ -36,7 +36,7 @@ class OE_department_exam
 
                 }
             } else {
-                $text = "No exam is scheduled yet";
+                $text = "No exam is published yet";
                 $btn = "Previous Exam's";
                 $url = site_url('/previous-result');
                 $this->notify_msg($text, $btn, $url);
