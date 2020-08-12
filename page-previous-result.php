@@ -27,7 +27,4 @@
         </table>
     </div>
 </section>
-<section class="result-sec">
-    <a href="<?php echo site_url('/exam-result') ?>">Current Results</a>
-</section>
 <?php get_footer('footer.php')?>

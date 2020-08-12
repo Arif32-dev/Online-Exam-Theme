@@ -19,7 +19,7 @@ class OE_department_exam
         $res = $wpdb->get_results("SELECT * FROM " . $table . " WHERE std_id=" . get_current_user_id() . "");
         if ($res) {
             $table = $wpdb->prefix . 'question_folder';
-            $exam_folder_data = $wpdb->get_results("SELECT * FROM " . $table . " WHERE dept_id=" . $res[0]->dept_id . " AND publish_exam=1");
+            $exam_folder_data = $wpdb->get_results("SELECT * FROM " . $table . " WHERE dept_id=" . $res[0]->dept_id . " AND publish_exam=1 AND exam_status='Running'");
             if ($exam_folder_data) {
                 $table = $wpdb->prefix . 'qustions';
                 $qustion_data = $wpdb->get_results("SELECT * FROM " . $table . " WHERE exam_folder_id=" . $exam_folder_data[0]->exam_folder_id . " AND status=1");

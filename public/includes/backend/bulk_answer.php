@@ -1,12 +1,11 @@
 <?php
 require_once dirname(dirname(dirname(dirname(dirname(dirname(dirname(__FILE__))))))) . '/wp-load.php';
-class OE_answer
+class OE_qus_bulk_answer
 {
     private $data;
     public function __construct()
     {
         $this->data = $_POST;
-        // print_r($this->data['final_data']);
         if (!$this->data['final_data']) {
             return;
         }
@@ -63,6 +62,45 @@ class OE_answer
                 '%d',
             ],
         );
+        if ($res) {
+            $this->update_qustion_folder($qus_data[0]['value']);
+        }
+    }
+    public function update_qustion_folder(int $exam_folder_id)
+    {
+        global $wpdb;
+        $table = $wpdb->prefix . 'qustions';
+        $res = $wpdb->get_results("SELECT * FROM " . $table . " WHERE exam_folder_id=" . $exam_folder_id . " AND status=1");
+        if (!$res) {
+            $table = $wpdb->prefix . 'question_folder';
+            $check_qustion_number = $wpdb->get_results("SELECT * FROM " . $table . " WHERE exam_folder_id=" . $exam_folder_id . "");
+            if (!$check_qustion_number) {
+                return;
+            }
+            $exam_folder_res = $wpdb->update(
+                $table,
+                [
+                    'terminate_exam' => false,
+                    'termination_date' => time(),
+                    'exam_status' => 'Finished',
+                ],
+                [
+                    'exam_folder_id' => sanitize_text_field($exam_folder_id),
+                ],
+                [
+                    '%d',
+                    '%d',
+                    '%s',
+                ],
+                [
+                    '%d',
+                    '%d',
+                ],
+            );
+            if ($exam_folder_res) {
+                echo $exam_folder_id;
+            }
+        }
     }
 }
-new OE_answer();
+new OE_qus_bulk_answer();

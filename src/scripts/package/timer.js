@@ -61,15 +61,20 @@ jQuery(document).ready(function($) {
                             chunk = data.splice(0, 2)
                             final_data.push(chunk)
                         }
-                        console.log(final_data);
                         $.ajax({
                             type: "post",
                             url: files.bulk_answer,
                             data: {
                                 final_data
                             },
-                            success: function(res) {
+                            success: res => {
                                 console.log(res)
+                                let view_result = `
+                                        <section class="result-sec">
+                                                <a href="${files.exam_result}?exam_folder_id=${res}">View Result</a>
+                                        </section>
+                                    `;
+                                $(view_result).insertAfter('.qus-container');
                             },
                             error: err => {
                                 alert("Something went wrong");
@@ -77,12 +82,6 @@ jQuery(document).ready(function($) {
                         });
                     }
 
-                    let view_result = `
-                    <section class="result-sec">
-                            <a href="${files.exam_result}">View Result</a>
-                    </section>
-                    `;
-                    $(view_result).insertAfter('.qus-container');
                 }
             }, 1000);
         }
