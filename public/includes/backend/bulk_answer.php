@@ -27,8 +27,11 @@ class OE_qus_bulk_answer extends OE_Base_answer
     public function insert_bulk_answer(array $qus_data)
     {
         if ($this->insert_answer(get_current_user_id(), $qus_data[0]['value'], $qus_data[1]['value'], false)) {
-            if (!$this->check_exam_status($qus_data[0]['value'], get_current_user_id())) {
+            /* if all qustion answer is submitted then check user qus will return false and i will make it true */
+            if (!$this->check_user_qus($qus_data[0]['value'], get_current_user_id())) {
                 if ($this->update_qustion_folder($qus_data[0]['value'])) {
+                    echo $qus_data[0]['value'];
+                } else {
                     echo $qus_data[0]['value'];
                 }
             }

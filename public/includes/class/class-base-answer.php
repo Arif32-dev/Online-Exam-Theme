@@ -37,10 +37,8 @@ class OE_Base_answer
     {
         global $wpdb;
         $table = $wpdb->prefix . 'question_folder';
-        $check_exam_folder = $wpdb->get_results("SELECT * FROM " . $table . " WHERE exam_folder_id=" . $exam_folder_id . " AND exam_status='Finished'");
+        $check_exam_folder = $wpdb->get_results("SELECT * FROM " . $table . " WHERE exam_folder_id=" . $exam_folder_id . " AND exam_status='Running' AND terminate_exam=1");
         if ($check_exam_folder) {
-            return false;
-        } else {
             $res = $wpdb->update(
                 $table,
                 [
@@ -62,15 +60,17 @@ class OE_Base_answer
                 ],
             );
             return $res;
+        } else {
+            return false;
         }
     }
 
     /**
-     * @method is going to check if all qustion is submitted or not if all it returns any response that means exam is not finished or if returns nothing or false that means exam is finished
+     * @method is going to check if all qustion is submitted or not if all it returns any response that means student have some qustion left or if returns nothing or false that means student have no qustion left
      * @param int $exam_folder_id
      * @return mixed|bool $res
      */
-    public function check_exam_status(int $exam_folder_id, int $user_id)
+    public function check_user_qus(int $exam_folder_id, int $user_id)
     {
         global $wpdb;
         $table = $wpdb->prefix . 'qustions';

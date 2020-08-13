@@ -23,7 +23,7 @@ jQuery(document).ready(function($) {
                         $(e.currentTarget).removeClass('oe_mcq');
                         $(e.currentTarget).parent().slideUp().hide();
                     }
-                    if (JSON.parse(res).res_text == 'exam_folder_update') {
+                    if (JSON.parse(res).res_text == 'qustion_finished') {
                         $(e.currentTarget).removeClass('oe_mcq');
                         $(e.currentTarget).parent().slideUp().hide();
                         let view_result = `
@@ -32,6 +32,18 @@ jQuery(document).ready(function($) {
                             </section>
                         `;
                         $(view_result).insertAfter('.qus-container');
+                    }
+
+                    if (JSON.parse(res).res_text == 'exam_finished') {
+                        $('.oe_mcq').removeClass('oe_mcq');
+                        $('.oe_timer').slideUp();
+                        $('.qus-container').slideUp();
+                        let view_result = `
+                            <section class="result-sec">
+                                    <a href="${files.exam_result}?exam_folder_id=${JSON.parse(res).exam_folder_id}">View Result</a>
+                            </section>
+                        `;
+                        $(view_result).insertAfter('header');
                     }
                 },
                 error: (err) => {

@@ -15,11 +15,19 @@ class OE_answer extends OE_Base_answer
             echo json_encode($arr);
             return;
         }
-        if (isset($this->data['ans'])) {
+        if (isset($this->data['ans']) && $this->data['ans'] != null) {
             $this->ans = sanitize_text_field($this->data['ans']);
-            $this->insert_single_answer();
         } else {
             $this->ans = false;
+        }
+        if ($this->check_exam_status()) {
+            $arr = [
+                'res_text' => 'exam_finished',
+                'exam_folder_id' => $this->data['exam_folder_id'],
+            ];
+            echo json_encode($arr);
+            return;
+        } else {
             $this->insert_single_answer();
         }
     }
@@ -29,17 +37,15 @@ class OE_answer extends OE_Base_answer
      */
     public function insert_single_answer()
     {
-        /* if the method return true then update qustion */
         if ($this->insert_answer(get_current_user_id(), $this->data['exam_folder_id'], $this->data['qustion_id'], $this->ans)) {
-            /* if all answer is not submitted then just output message */
-            if ($this->check_exam_status($this->data['exam_folder_id'], get_current_user_id())) {
+            if ($this->check_user_qus($this->data['exam_folder_id'], get_current_user_id())) {
                 $arr = [
                     'res_text' => 'success',
                 ];
                 echo json_encode($arr);
             } else {
                 $arr = [
-                    'res_text' => 'exam_folder_update',
+                    'res_text' => 'qustion_finished',
                     'exam_folder_id' => $this->data['exam_folder_id'],
                 ];
                 echo json_encode($arr);
@@ -48,6 +54,13 @@ class OE_answer extends OE_Base_answer
         } else {
             echo 'failed';
         }
+    }
+    public function check_exam_status()
+    {
+        global $wpdb;
+        $table = $wpdb->prefix . 'question_folder';
+        $res = $wpdb->get_results("SELECT * FROM " . $table . " WHERE exam_folder_id=" . sanitize_text_field($this->data['exam_folder_id']) . " AND exam_status='Finished' AND terminate_exam=0");
+        return $res;
     }
 }
 new OE_answer();
