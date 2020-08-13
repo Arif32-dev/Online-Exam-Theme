@@ -1,7 +1,7 @@
 <?php
 require_once dirname(dirname(dirname(dirname(dirname(dirname(dirname(__FILE__))))))) . '/wp-load.php';
-// require_once get_theme_file_path() . '/public/includes/class/class-base-answer.php';
-class OE_answer
+require_once get_theme_file_path() . '/public/includes/class/class-base-answer.php';
+class OE_answer extends OE_Base_answer
 {
     private $data;
     private $ans;
@@ -17,121 +17,37 @@ class OE_answer
         }
         if (isset($this->data['ans'])) {
             $this->ans = sanitize_text_field($this->data['ans']);
-            $this->insert_answer();
+            $this->insert_single_answer();
         } else {
             $this->ans = false;
-            $this->insert_answer();
+            $this->insert_single_answer();
         }
     }
-    public function insert_answer()
+    /**
+     * @method is going to insert a answer performed by student each at a time
+     * @return void
+     */
+    public function insert_single_answer()
     {
-        global $wpdb;
-        $table = $wpdb->prefix . 'result';
-        $res = $wpdb->insert(
-            $table,
-            [
-                'std_id' => get_current_user_id(),
-                'exam_folder_id' => sanitize_text_field($this->data['exam_folder_id']),
-                'qustion_id' => sanitize_text_field($this->data['qustion_id']),
-                'student_ans' => $this->ans,
-            ],
-            [
-                '%d',
-                '%d',
-                '%d',
-                '%d',
-            ]
-        );
-        if ($res) {
-            $this->update_qustions();
-        } else {
-            echo 'failed';
-        }
-    }
-    public function update_qustions()
-    {
-        global $wpdb;
-        $table = $wpdb->prefix . 'qustions';
-        $res = $wpdb->update(
-            $table,
-            [
-                'status' => false,
-            ],
-            [
-                'exam_folder_id' => sanitize_text_field($this->data['exam_folder_id']),
-                'qustion_id' => sanitize_text_field($this->data['qustion_id']),
-            ],
-            [
-                '%d',
-            ],
-            [
-                '%d',
-                '%d',
-            ],
-        );
-        if ($res) {
-            if ($this->check_exam_status($this->data['exam_folder_id'])) {
+        /* if the method return true then update qustion */
+        if ($this->insert_answer(get_current_user_id(), $this->data['exam_folder_id'], $this->data['qustion_id'], $this->ans)) {
+            /* if all answer is not submitted then just output message */
+            if ($this->check_exam_status($this->data['exam_folder_id'], get_current_user_id())) {
                 $arr = [
                     'res_text' => 'success',
                 ];
                 echo json_encode($arr);
             } else {
-                $this->update_qustion_folder($this->data['exam_folder_id']);
+                $arr = [
+                    'res_text' => 'exam_folder_update',
+                    'exam_folder_id' => $this->data['exam_folder_id'],
+                ];
+                echo json_encode($arr);
             }
+
         } else {
-            $arr = [
-                'res_text' => 'failed',
-            ];
-            echo json_encode($arr);
+            echo 'failed';
         }
-    }
-    public function update_qustion_folder(int $exam_folder_id)
-    {
-        global $wpdb;
-        $table = $wpdb->prefix . 'question_folder';
-        $check_qustion_number = $wpdb->get_results("SELECT * FROM " . $table . " WHERE exam_folder_id=" . $exam_folder_id . "");
-        if (!$check_qustion_number) {
-            return;
-        }
-        $res = $wpdb->update(
-            $table,
-            [
-                'terminate_exam' => false,
-                'termination_date' => time(),
-                'exam_status' => 'Finished',
-            ],
-            [
-                'exam_folder_id' => sanitize_text_field($exam_folder_id),
-            ],
-            [
-                '%d',
-                '%d',
-                '%s',
-            ],
-            [
-                '%d',
-                '%d',
-            ],
-        );
-        if ($res) {
-            $arr = [
-                'res_text' => 'exam_folder_update',
-                'exam_folder_id' => $exam_folder_id,
-            ];
-            echo json_encode($arr);
-        }
-    }
-    public function check_exam_status(int $exam_folder_id)
-    {
-        global $wpdb;
-        $table = $wpdb->prefix . 'qustions';
-        $res = $wpdb->get_results("SELECT * FROM " . $table . " WHERE exam_folder_id=" . $exam_folder_id . " AND status=1");
-        // if ($res) {
-        //     return 'exists';
-        // } else {
-        //     return 'proceed';
-        // }
-        return $res;
     }
 }
 new OE_answer();

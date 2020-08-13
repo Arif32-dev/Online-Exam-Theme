@@ -53,7 +53,7 @@ class OE_verification extends Base_mail
                     if ($respond) {
                         $this->class = "ver_msg";
                         $this->msg = "Your account is verfied. Log in to view you account";
-                        $site_url = site_url('/login');
+                        $site_url = site_url('/login?email=' . $res[0]->std_email . '&pass=' . $res[0]->std_password . '');
                         $mail_text = "Your account is being registered successfully. Log in to your account by clicking this link";
                         $subject = "Account Verification";
                         $alt_text = "Your account is being registered successfully. Log in to your account by clicking this link";
