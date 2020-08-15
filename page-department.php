@@ -1,4 +1,9 @@
-<?php get_header('header.php');
+<?php
+if (!is_user_logged_in()) {
+    wp_redirect(site_url('/'));
+    exit;
+}
+get_header('header.php');
 class OE_department_exam
 {
     public function __construct()
@@ -32,13 +37,23 @@ class OE_department_exam
                                         std_id=" . get_current_user_id() . " ) ");
 
                 if ($qustion_data) {
-                    $this->exam_timer($exam_folder_data);
-                    $this->exam_qustions($qustion_data);
+                    if (time() > $exam_folder_data[0]->remaining_time) {
+
+                        ?>
+                        <section class="result-sec">
+                            <a href="<?php echo site_url('/exam-result?exam_folder_id=' . $exam_folder_data[0]->exam_folder_id . '') ?>">View Result</a>
+                        </section>
+                        <?php
+
+                    } else {
+                        $this->exam_timer($exam_folder_data);
+                        $this->exam_qustions($qustion_data);
+                    }
                 } else {
 
                     ?>
                         <section class="result-sec">
-                            <a href="<?php echo site_url('/exam-result') ?>">View Result</a>
+                            <a href="<?php echo site_url('/exam-result?exam_folder_id=' . $exam_folder_data[0]->exam_folder_id . '') ?>">View Result</a>
                         </section>
                     <?php
 

@@ -8,7 +8,7 @@ class OE_qus_bulk_answer extends OE_Base_answer
     public function __construct()
     {
         $this->data = $_POST;
-        if (!$this->data['final_data']) {
+        if (!$this->data['final_data'] || empty($this->data['final_data'])) {
             return;
         }
         foreach ($this->data['final_data'] as $key) {

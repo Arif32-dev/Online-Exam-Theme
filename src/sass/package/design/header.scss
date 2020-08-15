@@ -30,6 +30,7 @@ header {
             nav,
             .user-cred {
                 a {
+                    white-space: nowrap;
                     font-size: 18px;
                     transition: all 0.5s ease-in-out;
                     -webkit-transition: all 0.5s ease-in-out;
@@ -64,6 +65,7 @@ header {
                 align-items: center;
 
                 a {
+                    white-space: nowrap;
                     text-decoration: none;
                     color: white
                 }
@@ -80,7 +82,7 @@ header {
         -ms-border-radius: 15px;
         -o-border-radius: 15px;
 
-        @media screen and (max-width: 860px) {
+        @media screen and (max-width: 890px) {
             .link {
                 display: none;
             }

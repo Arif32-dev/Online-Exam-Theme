@@ -1,5 +1,5 @@
 <?php
-if (!is_user_logged_in() && get_userdata(get_current_user_id())->roles[0] == 'subscriber') {
+if (!is_user_logged_in()) {
     wp_redirect(site_url('/'));
     exit;
 }

@@ -18,7 +18,6 @@
 
         tr {
             th {
-                width: 20%;
                 font-weight: bolder;
                 font-size: 17px;
                 padding: 10px 0;
@@ -40,8 +39,10 @@
         }
 
         .folder_icon {
+            white-space: nowrap;
+
             a {
-                margin: 0 10px 0 0;
+                margin: 0 5px 0 0;
                 font-size: 25px;
                 cursor: pointer;
                 @include module.transition;
@@ -67,6 +68,36 @@
                 -ms-border-radius: 5px;
                 -o-border-radius: 5px;
             }
+        }
+
+        .fail_txt {
+            text-align: center;
+
+            span {
+                background-color: red;
+                color: white;
+                padding: 5px 10px;
+                font-weight: bold;
+                border-radius: 5px;
+                -webkit-border-radius: 5px;
+                -moz-border-radius: 5px;
+                -ms-border-radius: 5px;
+                -o-border-radius: 5px;
+            }
+        }
+
+        .attended,
+        .absent {
+            text-align: center;
+            font-weight: bolder;
+        }
+
+        .attended {
+            color: $primary_color;
+        }
+
+        .absent {
+            color: red;
         }
     }
 
@@ -101,6 +132,20 @@
                         padding: 3px 8px;
                     }
                 }
+
+                .fail_txt {
+                    text-align: left;
+
+                    span {
+                        padding: 3px 8px;
+                    }
+                }
+
+                .attended,
+                .absent {
+                    text-align: left;
+                    font-weight: bolder;
+                }
             }
 
             td {
@@ -111,6 +156,11 @@
             }
 
             .pass_txt {
+                padding-top: 5px;
+                padding-bottom: 5px;
+            }
+
+            .fail_txt {
                 padding-top: 5px;
                 padding-bottom: 5px;
             }
@@ -132,20 +182,22 @@
             }
 
             td:nth-of-type(2):before {
-                content: "Student Name";
-            }
-
-            td:nth-of-type(3):before {
                 content: "Full Mark";
             }
 
+            td:nth-of-type(3):before {
+                content: "Your Mark";
+            }
+
             td:nth-of-type(4):before {
-                content: "Student Mark";
+                content: "Attendence";
+                color: black;
             }
 
             td:nth-of-type(5):before {
-                content: "Status";
+                content: "Exam Status";
             }
+
         }
     }
 
