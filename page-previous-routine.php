@@ -27,7 +27,7 @@ function prev_routine()
 }
 ?>
 <section class="prev_routine">
-    <h1>Previous Exam's</h1>
+    <h1>Previous Routine's</h1>
     <div class="prev_exam_container">
            <?php prev_routine()?>
     </div>
