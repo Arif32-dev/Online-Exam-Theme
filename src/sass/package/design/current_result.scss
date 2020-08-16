@@ -1,3 +1,5 @@
+@use '../common/module';
+
 .current_result {
     width: 98%;
     margin: 0 auto;
@@ -45,8 +47,11 @@
         }
     }
 
+    .header.result_folder_page {
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
+
     .result_container {
-        width: 98%;
         margin: 10px auto;
     }
 
@@ -66,6 +71,16 @@
             display: none;
             font-weight: bolder;
         }
+
+        @include module.transition;
+
+        &:hover {
+            @include module.shadow;
+        }
+    }
+
+    .show_result.result_folder_page {
+        grid-template-columns: 1fr 1fr 1fr 1fr;
     }
 
     .qustion {
@@ -77,7 +92,8 @@
     }
 
     .std_answer,
-    .answer_status {
+    .answer_status,
+    .correct_ans {
         display: flex;
         justify-content: center;
         align-items: center;
@@ -108,7 +124,7 @@
         }
     }
 
-    @media screen and (max-width: 580px) {
+    @media screen and (max-width: 780px) {
         .current_exam_info {
             flex-direction: column;
         }
@@ -125,7 +141,8 @@
             display: none;
         }
 
-        .show_result {
+        .show_result,
+        .show_result.result_folder_page {
             grid-template-columns: 1fr;
             margin: 20px auto;
 

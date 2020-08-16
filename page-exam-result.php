@@ -4,6 +4,7 @@ if (!is_user_logged_in()) {
     exit;
 }
 get_header('header.php');
+// require_once get_theme_file_path() . '/public/includes/class/class-base-result.php';
 class OE_current_exam_result
 {
     private $exam_folder_id;
@@ -15,12 +16,12 @@ class OE_current_exam_result
                 $this->exam_folder_id = sanitize_text_field(escapeshellarg($_GET['exam_folder_id']));
                 global $wpdb;
                 $table = $wpdb->prefix . 'question_folder';
-                $exam_folder_data = $wpdb->get_results("SELECT * FROM " . $table . " WHERE exam_folder_id=" . $this->exam_folder_id . "");
+                $exam_folder_data = $wpdb->get_results("SELECT * FROM " . $table . " WHERE exam_folder_id=" . $this->exam_folder_id . " AND exam_status='Running' ORDER BY exam_folder_id DESC");
                 if ($exam_folder_data) {
                     if (!$this->department_data($exam_folder_data)) {
                         return;
                     }
-                    if ($this->check_perticipant()) {
+                    if ($this->check_perticipant($exam_folder_data)) {
                         $this->fetch_result($exam_folder_data);
                     } else {
                         $text = "Sorry. You havn't perticipated in exam";
@@ -44,7 +45,7 @@ class OE_current_exam_result
     }
     public function aquired_mark($exam_folder_data)
     {
-        $total_mark = '';
+        $total_mark = 0;
         global $wpdb;
         $table = $wpdb->prefix . 'result';
         $res = $wpdb->get_results("SELECT * FROM " . $table . " WHERE exam_folder_id=" . $this->exam_folder_id . " AND std_id=" . get_current_user_id() . "");
@@ -61,11 +62,11 @@ class OE_current_exam_result
         }
         return $total_mark;
     }
-    public function check_perticipant()
+    public function check_perticipant($exam_folder_data)
     {
         global $wpdb;
         $table = $wpdb->prefix . 'result';
-        $res = $wpdb->get_results("SELECT std_id FROM " . $table . " WHERE std_id=" . get_current_user_id() . "");
+        $res = $wpdb->get_results("SELECT std_id FROM " . $table . " WHERE std_id=" . get_current_user_id() . " AND exam_folder_id=" . $exam_folder_data[0]->exam_folder_id . "");
         return $res;
     }
     public function department_data($exam_folder_data)
@@ -91,7 +92,7 @@ class OE_current_exam_result
                         </div>
                         <div class="total_mark">
                             <h3>Total Mark : <?php echo $exam_folder_data[0]->total_mark ?></h3>
-                            <h3>Your Mark : <?php echo $this->aquired_mark($exam_folder_data) != '' ? $this->aquired_mark($exam_folder_data) : '0'; ?></h3>
+                            <h3>Your Mark : <?php echo $this->aquired_mark($exam_folder_data) ?></h3>
                         </div>
                     </div>
 
@@ -149,7 +150,7 @@ class OE_current_exam_result
                         <span>Your Answer :</span>
                     </div>
                     <div class="std_answer">
-                        <span><?php echo $this->student_answer($result, $res); ?></span>
+                        <span><?php echo $this->student_answer($result, $res) ?></span>
                     </div>
                     <div class="title">
                         <span>Answer Status :</span>
