@@ -1,4 +1,8 @@
 <?php
+include_once ABSPATH . 'wp-admin/includes/plugin.php';
+if (!function_exists('is_plugin_active') || !is_plugin_active('online-exam/online-exam.php')) {
+    return;
+}
 
 $comments_query = new WP_Comment_Query();
 $comments_per_page = 1;

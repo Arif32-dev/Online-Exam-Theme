@@ -4,6 +4,23 @@ if (is_user_logged_in()) {
     exit;
 }
 get_header('header.php');
+include_once ABSPATH . 'wp-admin/includes/plugin.php';
+if (!function_exists('is_plugin_active') || !is_plugin_active('online-exam/online-exam.php')) {
+
+    ?>
+            <section class="oe-verifcation">
+                <div class="veri_container">
+                    <div class="ver_msg">
+                        <p>This theme require Online Exam Plugin to work properly</p>
+                    </div>
+                    <a href="<?php echo admin_url('plugins.php') ?>">Activate Plugin</a>
+                </div>
+            </section>
+        <?php
+
+    get_footer('footer.php');
+    return;
+}
 function oe_department()
 {
     global $wpdb;

@@ -4,6 +4,14 @@ class OE_front_page
 {
     public function __construct()
     {
+        include_once ABSPATH . 'wp-admin/includes/plugin.php';
+        if (!function_exists('is_plugin_active') || !is_plugin_active('online-exam/online-exam.php')) {
+            $text = "This theme require Online Exam Plugin to work properly";
+            $btn = "Activate Plugin";
+            $url = admin_url('plugins.php');
+            $this->notify_msg($text, $btn, $url);
+            return;
+        }
         $this->banner_sec();
         $this->dept_sec();
         $this->teacher_sec();
@@ -183,6 +191,21 @@ class OE_front_page
                     <div class="gmap_canvas">
                         <iframe  id="gmap_canvas" src="https://maps.google.com/maps?q=university%20of%20san%20francisco&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
                     </div>
+                </div>
+            </section>
+        <?php
+
+    }
+    public function notify_msg($text, $btn, $url)
+    {
+
+        ?>
+            <section class="oe-verifcation">
+                <div class="veri_container">
+                    <div class="ver_msg">
+                        <p><?php echo $text ?></p>
+                    </div>
+                    <a href="<?php echo $url ?>"><?php echo $btn ?></a>
                 </div>
             </section>
         <?php

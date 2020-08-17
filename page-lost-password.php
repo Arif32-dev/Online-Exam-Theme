@@ -2,6 +2,23 @@
 require_once get_template_directory() . '/public/includes/class/mail.php';
 
 get_header('header.php');
+include_once ABSPATH . 'wp-admin/includes/plugin.php';
+if (!function_exists('is_plugin_active') || !is_plugin_active('online-exam/online-exam.php')) {
+
+    ?>
+            <section class="oe-verifcation">
+                <div class="veri_container">
+                    <div class="ver_msg">
+                        <p>This theme require Online Exam Plugin to work properly</p>
+                    </div>
+                    <a href="<?php echo admin_url('plugins.php') ?>">Activate Plugin</a>
+                </div>
+            </section>
+        <?php
+
+    get_footer('footer.php');
+    return;
+}
 ?>
      <link rel="stylesheet" type="text/css" href="<?php echo get_template_directory_uri() . '/public/assets/css/login.min.css' ?>">
 <div class="limiter">

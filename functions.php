@@ -4,6 +4,10 @@ class OE_function
     public function __construct()
     {
         add_action("wp_enqueue_scripts", [$this, 'oe_files']);
+        include_once ABSPATH . 'wp-admin/includes/plugin.php';
+        if (!function_exists('is_plugin_active') || !is_plugin_active('online-exam/online-exam.php')) {
+            return;
+        }
         $this->include_other_class();
     }
     public function oe_files()

@@ -1,9 +1,18 @@
 <?php
 get_header('header.php');
+
 class Single_post
 {
     public function __construct()
     {
+        include_once ABSPATH . 'wp-admin/includes/plugin.php';
+        if (!function_exists('is_plugin_active') || !is_plugin_active('online-exam/online-exam.php')) {
+            $text = "This theme require Online Exam Plugin to work properly";
+            $btn = "Activate Plugin";
+            $url = admin_url('plugins.php');
+            $this->notify_msg($text, $btn, $url);
+            return;
+        }
         $this->single_post();
     }
     public function single_post()
@@ -22,6 +31,21 @@ class Single_post
 
             }
         }
+    }
+    public function notify_msg($text, $btn, $url)
+    {
+
+        ?>
+            <section class="oe-verifcation">
+                <div class="veri_container">
+                    <div class="ver_msg">
+                        <p><?php echo $text ?></p>
+                    </div>
+                    <a href="<?php echo $url ?>"><?php echo $btn ?></a>
+                </div>
+            </section>
+        <?php
+
     }
     public function img_sec()
     {

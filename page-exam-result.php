@@ -11,6 +11,14 @@ class OE_current_exam_result extends OE_Base_result
     private $exam_folder_data;
     public function __construct()
     {
+        include_once ABSPATH . 'wp-admin/includes/plugin.php';
+        if (!function_exists('is_plugin_active') || !is_plugin_active('online-exam/online-exam.php')) {
+            $text = "This theme require Online Exam Plugin to work properly";
+            $btn = "Activate Plugin";
+            $url = admin_url('plugins.php');
+            $this->notify_msg($text, $btn, $url);
+            return;
+        }
 
         if (get_userdata(get_current_user_id())->roles[0] == 'student') {
             if (isset($_GET['exam_folder_id']) && !empty($_GET['exam_folder_id'])) {
