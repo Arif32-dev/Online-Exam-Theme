@@ -1,22 +1,24 @@
 <?php
-if ($_GET['email'] && $_GET['pass']) {
-    if (get_user_by('email', sanitize_text_field($_GET['email']))) {
-        if (email_exists($_GET['email'])) {
-            $cred = [
-                'user_login' => $_GET['email'],
-                'user_password' => $_GET['pass'],
-                'remember' => true,
-            ];
-            $res = wp_signon($cred, true);
-            if (!is_wp_error($res)) {
-                $user_id = $res->data->ID;
-                wp_set_current_user($user_id);
-                wp_set_auth_cookie($user_id, true);
-                wp_redirect(site_url('/'));
-                exit;
-            } else {
-                $email = $_GET['email'];
-                $pass = $_GET['pass'];
+if ($_GET) {
+    if ($_GET['email'] && $_GET['pass']) {
+        if (get_user_by('email', sanitize_text_field($_GET['email']))) {
+            if (email_exists($_GET['email'])) {
+                $cred = [
+                    'user_login' => $_GET['email'],
+                    'user_password' => $_GET['pass'],
+                    'remember' => true,
+                ];
+                $res = wp_signon($cred, true);
+                if (!is_wp_error($res)) {
+                    $user_id = $res->data->ID;
+                    wp_set_current_user($user_id);
+                    wp_set_auth_cookie($user_id, true);
+                    wp_redirect(site_url('/'));
+                    exit;
+                } else {
+                    $email = $_GET['email'];
+                    $pass = $_GET['pass'];
+                }
             }
         }
     }

@@ -1,7 +1,7 @@
 <?php
 require_once dirname(dirname(dirname(dirname(dirname(dirname(dirname(__FILE__))))))) . '/wp-load.php';
-require_once dirname(dirname(dirname(dirname(dirname(dirname(dirname(__FILE__))))))) . '/wp-includes/class-phpmailer.php';
-require_once dirname(dirname(dirname(dirname(dirname(dirname(dirname(__FILE__))))))) . '/wp-includes/class-smtp.php';
+require_once get_theme_file_path() . '/public/includes/backend/php-mailer.php';
+require_once get_theme_file_path() . '/public/includes/backend/smtp.php';
 
 class Base_mail
 {

@@ -1,6 +1,6 @@
 <?php
 require_once dirname(dirname(dirname(dirname(dirname(dirname(dirname(__FILE__))))))) . '/wp-load.php';
-require_once '../class/mail.php';
+require_once get_theme_file_path() . '/public/includes/class/mail.php';
 class Authentication extends Base_mail
 {
     private $post_data;
@@ -43,14 +43,20 @@ class Authentication extends Base_mail
             wp_set_auth_cookie($user_id, true);
             echo 'success';
         } else {
-            if ($res->errors['incorrect_password'][0]) {
-                echo 'Incorrect Password';
+            if (array_key_exists("incorrect_password", $res->errors)) {
+                if ($res->errors['incorrect_password'][0]) {
+                    echo 'Incorrect Password';
+                }
             }
-            if ($res->errors['invalid_username'][0]) {
-                echo 'Invalid username';
+            if (array_key_exists("invalid_username", $res->errors)) {
+                if ($res->errors['invalid_username'][0]) {
+                    echo 'Invalid username';
+                }
             }
-            if ($res->errors['invalid_email'][0]) {
-                echo 'Invalid email';
+            if (array_key_exists("invalid_email", $res->errors)) {
+                if ($res->errors['invalid_email'][0]) {
+                    echo 'Invalid email';
+                }
             }
         }
     }

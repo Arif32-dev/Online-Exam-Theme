@@ -22,7 +22,7 @@ class OE_current_exam_result extends OE_Base_result
 
         if (get_userdata(get_current_user_id())->roles[0] == 'student') {
             if (isset($_GET['exam_folder_id']) && !empty($_GET['exam_folder_id'])) {
-                $this->exam_folder_id = sanitize_text_field(escapeshellarg($_GET['exam_folder_id']));
+                $this->exam_folder_id = sanitize_text_field($_GET['exam_folder_id']);
                 $this->exam_folder_data = $this->qustion_folder_check($this->exam_folder_id, 'Running');
                 if ($this->exam_folder_data) {
                     if (!$this->department_data($this->exam_folder_data)) {
