@@ -30,7 +30,6 @@ class OE_function
         require_once get_theme_file_path() . '/public/includes/class/add-page.php';
         require_once get_theme_file_path() . '/public/includes/class/theme-support.php';
         require_once get_theme_file_path() . '/public/includes/class/user_login_sign_up.php';
-        require_once get_theme_file_path() . '/public/includes/class/theme-setting.php';
     }
 }
 new OE_function();

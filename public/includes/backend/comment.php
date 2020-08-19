@@ -26,7 +26,11 @@ class OE_commnet
                 'number' => ($comments_per_page + $comments_per_page),
             ]);
 
-            date_default_timezone_set(wp_timezone_string());
+            $zoneList = timezone_identifiers_list();
+            if (in_array(wp_timezone_string(), $zoneList)) {
+                date_default_timezone_set(wp_timezone_string());
+            }
+
             if ($comments) {
 
                 ?>
