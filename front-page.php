@@ -1,5 +1,4 @@
 <?php get_header('header.php');
-
 class OE_front_page
 {
     public function __construct()
@@ -213,5 +212,4 @@ class OE_front_page
     }
 }
 new OE_front_page();
-
 get_footer('footer.php');
