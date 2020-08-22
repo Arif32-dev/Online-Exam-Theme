@@ -120,7 +120,9 @@ class OE_commnet
     }
     public function time_diff($time)
     {
-        date_default_timezone_set(wp_timezone_string());
+        if (in_array(wp_timezone_string(), $zoneList)) {
+            date_default_timezone_set(wp_timezone_string());
+        }
 
         $time_diff = abs((time() - strtotime($time)));
         if ($time_diff < 60) {

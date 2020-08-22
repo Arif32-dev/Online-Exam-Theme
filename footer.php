@@ -58,6 +58,10 @@ function get_extra_field()
                   </form>
               </div>
           </div>
+          <div class="dev_info">
+            <h4>Developed By : AR Arif</h4>
+            <h4>Email : dev.dr.arif@gmail.com</h4>
+          </div>
       </div>
   </footer>
   <!-- JS here -->

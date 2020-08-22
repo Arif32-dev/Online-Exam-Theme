@@ -23,8 +23,8 @@ class OE_front_page
           <div class="banner">
                 <div class="overlay"></div>
                 <div class="info">
-                    <h1>Gurudayal University</h1>
-                    <h2>A dream university to read</h2>
+                    <h1>Online Exam</h1>
+                    <h2>A place where you can test yourself</h2>
                     <a href="<?php echo site_url('/blog') ?> ">Read More</a>
                 </div>
         </div>
@@ -45,59 +45,65 @@ class OE_front_page
     }
     public function teacher_sec()
     {
-        $teacher = $this->teacher_query();
         ?>
             <section class="teacher-wrap">
                 <h1>Our Teacher's</h1>
                 <div class="teacher_container">
-                    <?php $this->teacher_loop($teacher);?>
-                </div>
-                <div class="oe-pagination">
-                    <span class="pagination_wrap">
-                        <?php $this->paginate_teacher($teacher)?>
-                    </span>
+                    <?php $this->all_teacher()?>
                 </div>
             </section>
         <?php
 
     }
-    public function teacher_query()
+    public function teacher_data()
     {
-        $teacher = new WP_Query(
-            [
-                'post_type' => 'teacher',
-                'posts_per_page' => 4,
-                'paged' => get_query_var('page'),
-            ]
-        );
-        return $teacher;
+        global $wpdb;
+        $table = $wpdb->prefix . 'teacher';
+        $teacher_data = $wpdb->get_results("SELECT * FROM " . $table . "");
+        return $teacher_data;
     }
-
-    public function teacher_loop($teacher)
+    public function all_teacher()
     {
-        if ($teacher->have_posts()) {
-            while ($teacher->have_posts()) {
-                $teacher->the_post();
-                get_template_part('./public/includes/template/content', 'teacher');
+        global $wpdb;
+        $teacher_data = $this->teacher_data();
+        if ($teacher_data) {
+            foreach ($teacher_data as $teacher) {
+                $table = $wpdb->prefix . 'department';
+                $dept_data = $wpdb->get_results("SELECT dept_name FROM " . $table . " WHERE dept_id=" . $teacher->teacher_dept . "");
+                if ($dept_data) {
+                    $this->teacher_html($teacher, $dept_data);
+                }
             }
-            wp_reset_postdata();
         }
-
     }
-    public function paginate_teacher($teacher)
+    public function teacher_html($teacher, $dept_data)
     {
-        echo paginate_links(
-            [
-                'current' => max(1, get_query_var('page')),
-                'prev_text' => 'Prev',
-                'next_text' => 'Next',
-                'total' => $teacher->max_num_pages,
-                'mid_size' => 1,
-                'end_size' => 1,
-            ]
-        );
+
+        ?>
+            <div class="teacher_info">
+                <div class="side_logo">
+                    <img src="<?php echo get_template_directory_uri() . '/public/assets/img/avatar.png' ?>" alt="">
+                </div>
+                <div class="teacher_details">
+                    <div class="row">
+                        <span><strong>Name :</strong><?php echo $teacher->teacher_name ?></span>
+                        <span><strong>Department :</strong><?php echo $dept_data[0]->dept_name ?></span>
+                        <span><strong>Phone :</strong><?php echo $this->teacher_phn_availablity($teacher) ?></span>
+                    </div>
+                </div>
+            </div>
+        <?php
 
     }
+    public function teacher_phn_availablity($teacher)
+    {
+        if (is_user_logged_in()) {
+            return $teacher->teacher_phn;
+        } else {
+            return 'Please Log in to view phone';
+        }
+    }
+
     public function notice_sec()
     {
 

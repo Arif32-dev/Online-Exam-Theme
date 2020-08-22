@@ -171,5 +171,10 @@ footer {
         }
     }
 
+    .dev_info {
+        margin: 0 20px;
+        margin-bottom: 30px;
+    }
+
     @include module.border-radious;
 }
