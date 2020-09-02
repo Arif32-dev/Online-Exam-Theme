@@ -74,13 +74,15 @@ class OE_Base_answer
     {
         global $wpdb;
         $table = $wpdb->prefix . 'qustions';
+        $result_table = $wpdb->prefix . 'result';
         $res = $wpdb->get_results(
             "SELECT * FROM " . $table . "
                         WHERE exam_folder_id=" . $exam_folder_id . " AND
                             qustion_id NOT IN
-                                ( SELECT qustion_id FROM wp_result WHERE
+                                ( SELECT qustion_id FROM `{$result_table}` WHERE
                                     exam_folder_id=" . $exam_folder_id . " AND
-                                        std_id=" . $user_id . " ) ");
+                                        std_id=" . $user_id . " ) "
+        );
         return $res;
     }
 }

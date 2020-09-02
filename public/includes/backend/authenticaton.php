@@ -84,19 +84,22 @@ class Authentication extends Base_mail
         }
         $this->db_checking();
     }
+
     public function db_checking()
     {
         global $wpdb;
         $table = $wpdb->prefix . 'students';
-        $res = $wpdb->get_results("SELECT * FROM " . $table . " WHERE std_email='" . $this->post_data['email'] . "'");
+        $res = $wpdb->get_results("SELECT * FROM " . $table . " WHERE std_email='" . sanitize_text_field($this->post_data['email']) . "'");
         if ($res) {
             echo 'Email already exists.';
         } else {
             $site_url = site_url('/verification?std_id=' . md5(sanitize_text_field($this->post_data['email'])));
             $subject = "Account Registration";
             $mail_text = "Your account is being registered. Please click the link below to verify your account";
-            $alt_text = "Please confirm your email by clicking this link";
-            if ($this->send_mail($this->post_data['email'], get_option('mailer_gmail'), $site_url, $subject, $mail_text, 'Verify Account', $alt_text, true)) {
+            $reply_to_name = get_option('blogname');
+            $recipent_name = sanitize_text_field($this->post_data['name']);
+            $mail_respond = $this->set_mail_info($this->post_data['email'], $reply_to_name, $site_url, $subject, $mail_text, 'Verify Account', 'registration', $recipent_name);
+            if ($mail_respond['res'] == 'success') {
                 $this->user_create();
             } else {
                 echo 'Something went wrong';
@@ -157,9 +160,11 @@ class Authentication extends Base_mail
         ]);
         if (is_int($user_id)) {
             $site_url = site_url('/login?email=' . $user_data->data->user_email . '&pass=' . $this->new_pass . '');
-            $subject = "Account Registration";
+            $subject = "Password Recovery";
             $mail_text = "Your Login Email : " . $user_data->data->user_email . "  & Your Password : <strong style='color: black;'>" . $this->new_pass . "</strong>";
-            if ($this->send_mail($user_data->data->user_email, get_option('mailer_gmail'), $site_url, $subject, $mail_text, 'Log In', $mail_text, true)) {
+            $recipent_name = get_userdata($user_id)->data->user_nicename;;
+            $mail_respond = $this->set_mail_info($user_data->data->user_email, get_option('blogname'), $site_url, $subject, $mail_text, 'Log In', 'lost_pass', $recipent_name);
+            if ($mail_respond['res'] == 'success') {
                 echo 'recovered';
             } else {
                 echo 'Something went wrong';
@@ -171,17 +176,22 @@ class Authentication extends Base_mail
     public function contact_form()
     {
         $subject = "Contact Messege";
-        $mail_text = "" . $this->post_data['msg'] . "";
+        $mail_text = "" . sanitize_text_field($this->post_data['msg']) . "";
+        $recipent_name = get_option('blogname');
         if (is_user_logged_in()) {
             $user_data = get_userdata(get_current_user_id());
-            if ($this->send_mail(get_option('mailer_gmail'), $user_data->data->user_email, '', $subject, $mail_text, '', $mail_text, false)) {
+            $reply_to_name = $user_data->data->user_nicename;
+
+            $mail_respond = $this->set_mail_info($user_data->data->user_email, $reply_to_name, '', $subject, $mail_text, '', 'contact_us', $recipent_name);
+            if ($mail_respond['res'] == 'success') {
                 echo 'contact_us_success';
             } else {
                 echo 'Something went wrong';
             }
         } else {
-
-            if ($this->send_mail(get_option('mailer_gmail'), $this->post_data['email'], '', $subject, $mail_text, '', $mail_text, false)) {
+            $reply_to_name = sanitize_text_field($this->post_data['name']);
+            $mail_respond = $this->set_mail_info(sanitize_text_field($this->post_data['email']), $reply_to_name,  '', $subject, $mail_text, '', 'contact_us', $recipent_name);
+            if ($mail_respond['res'] == 'success') {
                 echo 'contact_us_success';
             } else {
                 echo 'Something went wrong';

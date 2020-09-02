@@ -29,6 +29,8 @@ class OE_commnet
             $zoneList = timezone_identifiers_list();
             if (in_array(wp_timezone_string(), $zoneList)) {
                 date_default_timezone_set(wp_timezone_string());
+            } else {
+                date_default_timezone_set('America/Los_Angeles');
             }
 
             if ($comments) {
@@ -120,8 +122,11 @@ class OE_commnet
     }
     public function time_diff($time)
     {
+        $zoneList = timezone_identifiers_list();
         if (in_array(wp_timezone_string(), $zoneList)) {
             date_default_timezone_set(wp_timezone_string());
+        } else {
+            date_default_timezone_set('America/Los_Angeles');
         }
 
         $time_diff = abs((time() - strtotime($time)));

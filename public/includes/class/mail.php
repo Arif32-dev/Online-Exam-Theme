@@ -1,32 +1,17 @@
 <?php
 require_once dirname(dirname(dirname(dirname(dirname(dirname(dirname(__FILE__))))))) . '/wp-load.php';
-require_once get_theme_file_path() . '/public/includes/backend/php-mailer.php';
-require_once get_theme_file_path() . '/public/includes/backend/smtp.php';
+require_once get_theme_file_path() . '/vendor/autoload.php';
+
+use PHPMailer\PHPMailer\PHPMailer;
 
 class Base_mail
 {
 
-    public function send_mail($email, $reply_email, $site_url, $subject, $mail_text, $btn_text, $alt_text, $should_use_btn)
+    public function set_mail_info($email, $reply_to_name, $site_url, $subject, $mail_text, $btn_text, $action, $recipent_name)
     {
 
-        $mail = new PHPMailer(true);
-
-        $mail->isSMTP(); // Send using SMTP
-        $mail->Host = 'smtp.gmail.com'; // Set the SMTP server to send through
-        $mail->SMTPAuth = true; // Enable SMTP authentication
-        $mail->Username = '' . get_option('mailer_gmail') . ''; // SMTP username
-        $mail->Password = '' . get_option('mailer_pass') . ''; // SMTP password
-        $mail->SMTPSecure = 'tls'; // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` encouraged
-        $mail->Port = 587; // TCP port to connect to, use 465 for `PHPMailer::ENCRYPTION_SMTPS` above
-
-        //Recipients
-        $mail->setFrom('' . get_option('mailer_gmail') . '', '' . get_bloginfo('name') . '');
-        $mail->addAddress('' . $email . '', 'User'); // Add a recipient
-        $mail->addReplyTo('' . $reply_email . '', 'Reply');
-        $mail->isHTML(true); // Set email format to HTML
-        $mail->Subject = '' . $subject . '';
-        if ($should_use_btn) {
-            $mail->Body = '
+        if ($action == 'registration' || $action == 'verification' || $action == 'lost_pass') {
+            $mail_body = '
                 <h3 style="color: green">' . $mail_text . '</h3>
                 <h3>
                 <a
@@ -57,17 +42,98 @@ class Base_mail
                 >' . $btn_text . '</a>
                 </h3>
             ';
-            $mail->AltBody = '
-                ' . $alt_text . '
-                ' . $site_url . '
-            ';
+            return $this->send_messege($email, $reply_to_name, $subject, $mail_body, $action, $recipent_name);
         } else {
-            $mail->Body = '
+            $mail_body = '
                 <h3>' . $mail_text . '</h3>';
-            $mail->AltBody = '
-                ' . $alt_text . '
-            ';
+            return $this->send_messege($email, $reply_to_name, $subject, $mail_body, $action, $recipent_name);
         }
-        return $mail->send();
+    }
+    public function createMessage($sender, $to, $reply_to, $reply_to_name, $subject, $messageText, $recipent_name)
+    {
+        $message = new \Google_Service_Gmail_Message();
+
+        $mail = new PHPMailer();
+        $mail->setFrom($sender, '' . get_option('blogname') . '');
+        $mail->addAddress($to, $recipent_name);
+        $mail->addAddress($recipent_name);
+        $mail->addReplyTo($reply_to, '' . $reply_to_name . '');
+
+
+        $mail->isHTML(true);
+        $mail->Subject = $subject;
+        $mail->Body = $messageText;
+        $mail->preSend();
+        $mime = $mail->getSentMIMEMessage();
+
+        $rawMessage = strtr(base64_encode($mime), array('+' => '-', '/' => '_'));
+        $message->setRaw($rawMessage);
+        return $message;
+    }
+    public function service()
+    {
+        $client = $this->get_client();
+        $service = new \Google_Service_Gmail($client);
+        return $service;
+    }
+    public function get_client()
+    {
+        $client = new \Google_Client();
+        $client->setApplicationName('Online Exam Gmail Setup');
+        $client->setScopes(\Google_Service_Gmail::MAIL_GOOGLE_COM);
+        $client->setAuthConfig(get_option('credentials'));
+
+        if (get_option('access_token')) {
+            $client->setAccessToken(get_option('access_token'));
+        }
+        // If there is no previous token or it's expired.
+        if ($client->isAccessTokenExpired()) {
+            // Refresh the token if possible, else fetch a new one.
+            if ($client->getRefreshToken()) {
+                $client->fetchAccessTokenWithRefreshToken($client->getRefreshToken());
+            }
+        }
+        return $client;
+    }
+    public function send_messege($target_email, $reply_to_name, $subject, $messge_text, $action, $recipent_name)
+    {
+        $authenticated_email = $this->service()->users->getProfile('me')->getEmailAddress();
+        if ($action == 'registration' || $action == 'verification' || $action == 'lost_pass') {
+            $sending_msg = $this->createMessage(
+                $authenticated_email,
+                sanitize_text_field($target_email),
+                $authenticated_email,
+                $reply_to_name,
+                $subject,
+                $messge_text,
+                $recipent_name
+            );
+        }
+        if ($action == 'contact_us') {
+            $sending_msg = $this->createMessage(
+                $authenticated_email,
+                $authenticated_email,
+                sanitize_text_field($target_email),
+                $reply_to_name,
+                $subject,
+                $messge_text,
+                $recipent_name
+            );
+        }
+
+        try {
+            $message = $this->service()->users_messages->send($authenticated_email, $sending_msg);
+            $output_array = [
+                'res' => 'success',
+                'returned' => 'Message with ID: ' . $message->getId() . ' sent.'
+            ];
+            return $output_array;
+        } catch (Exception $e) {
+            $output_array = [
+                'res' => 'failed',
+                'returned' => $e->getMessage()
+            ];
+            return $output_array;
+        }
     }
 }

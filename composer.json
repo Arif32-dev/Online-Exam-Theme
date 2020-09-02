@@ -1,0 +1,21 @@
+{
+    "name": "user/online-exam",
+    "description": "This is a online exam theme. This theme has a plugin which is online exam plugin . Without that plugin this theme wont work properly",
+    "type": "project",
+    "authors": [{
+        "name": "Arif32-dev",
+        "email": "dragonwarrior062@gmail.com"
+    }],
+    "require": {
+        "google/apiclient": "2.7",
+        "phpmailer/phpmailer": "^6.1"
+    },
+    "scripts": {
+        "post-update-cmd": "Google_Task_Composer::cleanup"
+    },
+    "extra": {
+        "google/apiclient-services": [
+            "Gmail"
+        ]
+    }
+}

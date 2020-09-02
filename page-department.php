@@ -36,11 +36,12 @@ class OE_department_exam
 
             if ($exam_folder_data) {
                 $table = $wpdb->prefix . 'qustions';
+                $result_table = $wpdb->prefix . 'result';
                 $qustion_data = $wpdb->get_results(
                     "SELECT * FROM " . $table . "
                         WHERE exam_folder_id=" . $exam_folder_data[0]->exam_folder_id . " AND
                             qustion_id NOT IN
-                                ( SELECT qustion_id FROM wp_result WHERE
+                                ( SELECT qustion_id FROM `{$result_table}` WHERE
                                     exam_folder_id=" . $exam_folder_data[0]->exam_folder_id . " AND
                                         std_id=" . get_current_user_id() . " ) ");
 
@@ -127,7 +128,12 @@ class OE_department_exam
     }
     public function exam_timer($exam_folder_data)
     {
-        date_default_timezone_set(wp_timezone_string());
+        $zoneList = timezone_identifiers_list();
+        if (in_array(wp_timezone_string(), $zoneList)) {
+            date_default_timezone_set(wp_timezone_string());
+        } else {
+            date_default_timezone_set('America/Los_Angeles');
+        }
 
         ?>
             <section class="oe_timer">

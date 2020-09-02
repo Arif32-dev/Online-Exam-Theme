@@ -1,7 +1,7 @@
 <?php
-require_once get_template_directory() . '/public/includes/class/mail.php';
 
 get_header('header.php');
+require_once get_template_directory() . '/public/includes/class/mail.php';
 
 class OE_verification extends Base_mail
 {
@@ -22,16 +22,16 @@ class OE_verification extends Base_mail
     public function notify_msg($text, $btn, $url)
     {
 
-        ?>
-            <section class="oe-verifcation">
-                <div class="veri_container">
-                    <div class="ver_msg">
-                        <p><?php echo $text ?></p>
-                    </div>
-                    <a href="<?php echo $url ?>"><?php echo $btn ?></a>
+?>
+        <section class="oe-verifcation">
+            <div class="veri_container">
+                <div class="ver_msg">
+                    <p><?php echo $text ?></p>
                 </div>
-            </section>
-        <?php
+                <a href="<?php echo $url ?>"><?php echo $btn ?></a>
+            </div>
+        </section>
+<?php
 
     }
     public function verify_user()
@@ -53,7 +53,8 @@ class OE_verification extends Base_mail
                     ]
                 );
                 if (is_int($user_id)) {
-                    $respond = $wpdb->update($table,
+                    $respond = $wpdb->update(
+                        $table,
                         [
                             'std_id' => $user_id,
                             'std_password' => 'empty',
@@ -77,11 +78,19 @@ class OE_verification extends Base_mail
                         $this->class = "ver_msg";
                         $this->msg = "Your account is verfied. Log in to view you account";
                         $site_url = site_url('/login?email=' . $res[0]->std_email . '&pass=' . $res[0]->std_password . '');
-                        $mail_text = "Your account is being registered successfully. Log in to your account by clicking this link";
+                        $mail_text = "Your account is being verified successfully. Log in to your account by clicking this link";
                         $subject = "Account Verification";
-                        $alt_text = "Your account is being registered successfully. Log in to your account by clicking this link";
-
-                        if (!$this->send_mail($res[0]->std_email, get_option('mailer_gmail'), $site_url, $subject, $mail_text, 'Login to your account', $alt_text, true)) {
+                        $mail_respond = $this->set_mail_info(
+                            $res[0]->std_email,
+                            get_option('blogname'),
+                            $site_url,
+                            $subject,
+                            $mail_text,
+                            'Login to your account',
+                            'verification',
+                            $res[0]->std_name
+                        );
+                        if ($mail_respond['res'] != 'success') {
                             echo "Mail couldn't sent";
                         }
                     } else {
@@ -109,4 +118,4 @@ $user_verify = new OE_verification();
         <a href="<?php echo site_url('/login') ?>">Login</a>
     </div>
 </section>
-<?php get_footer('footer.php')?>
+<?php get_footer('footer.php') ?>
