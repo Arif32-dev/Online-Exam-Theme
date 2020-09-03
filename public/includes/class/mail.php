@@ -54,6 +54,7 @@ class Base_mail
         $message = new \Google_Service_Gmail_Message();
 
         $mail = new PHPMailer();
+        $mail->SMTPAuth = true;
         $mail->setFrom($sender, '' . get_option('blogname') . '');
         $mail->addAddress($to, $recipent_name);
         $mail->addAddress($recipent_name);
