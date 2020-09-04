@@ -5,11 +5,12 @@ class OE_function
     {
         add_action("wp_enqueue_scripts", [$this, 'oe_files']);
         $this->include_other_class();
+        add_filter('clean_url', [$this, 'defer_parsing_of_js',], 11, 1);
     }
     public function oe_files()
     {
         // styles
-        wp_enqueue_style("online-exam_style", get_stylesheet_uri());
+        wp_enqueue_style("online-exam_style", get_template_directory_uri() . '/public/assets/css/main.min.css', '', '1.0.1', 'all');
         wp_enqueue_style("online-exam_style_poppins", "//fonts.googleapis.com/css2?family=Poppins&display=swap");
         // scripts
         wp_enqueue_script('jquery');
@@ -30,6 +31,11 @@ class OE_function
         require_once get_theme_file_path() . '/public/includes/class/add-page.php';
         require_once get_theme_file_path() . '/public/includes/class/theme-support.php';
         require_once get_theme_file_path() . '/public/includes/class/user_login_sign_up.php';
+    }
+    public function defer_parsing_of_js($url)
+    {
+        if (FALSE === strpos($url, '.js')) return $url;
+        return "$url' defer ";
     }
 }
 new OE_function();
